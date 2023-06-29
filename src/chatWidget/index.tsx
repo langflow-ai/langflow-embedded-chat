@@ -8,7 +8,7 @@ export default function ChatWidget({ trigger }: { trigger?: React.CSSProperties 
     return (
         <div>
             <ChatTrigger triggerRef={triggerRef} open={open} setOpen={setOpen} style={trigger} />
-            {open && <ChatWindow triggerRef={triggerRef} position="top"/>}
+            {open && <ChatWindow triggerRef={triggerRef} position="bottom-left"/>}
         </div>
     )
 }
