@@ -1,6 +1,6 @@
 import { Send } from 'lucide-react';
 import { getChatPosition } from '../utils';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ChatMessageType } from '../../types/chatWidget';
 import ChatMessage from './chatMessage';
 
@@ -9,6 +9,7 @@ export default function ChatWindow({ position, triggerRef, width = 288, height =
     const [messages, setMessages] = useState<ChatMessageType[]>([]);
     const [value, setValue] = useState<string>();
     const ref = useRef<HTMLDivElement>(null);
+    const lastMessage = useRef<HTMLDivElement>(null);
     const { left, top } = getChatPosition(position, triggerRef.current!.getBoundingClientRect(), width, height);
 
     function handleClick() {
@@ -17,6 +18,9 @@ export default function ChatWindow({ position, triggerRef, width = 288, height =
             setValue('');
         }
     }
+    useEffect(() => {
+        if (lastMessage.current) lastMessage.current.scrollIntoView({ behavior: "smooth" });
+      }, [messages]);
 
 
     return (
@@ -26,6 +30,7 @@ export default function ChatWindow({ position, triggerRef, width = 288, height =
                     {messages.map((message, index) =>
                         <ChatMessage key={index} message={message.message} isSend={message.isSend} />
                     )}
+                    <div ref={lastMessage}></div>
                 </div>
                 <div className="flex w-full h-12 items-center border-t border-gray-200">
                     <input
