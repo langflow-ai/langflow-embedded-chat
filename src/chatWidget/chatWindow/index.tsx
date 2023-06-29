@@ -1,11 +1,14 @@
 import { Send } from 'lucide-react';
 import { getChatPosition } from '../utils';
+import { useRef } from 'react';
 
-export default function ChatWindow({ position, triggerRef}: {position: string, triggerRef: React.RefObject<HTMLDivElement> }) {
-    const relativePosition =  getChatPosition(position, triggerRef.current!.getBoundingClientRect());
+export default function ChatWindow({ position, triggerRef, width=288, height=320}: 
+{position: string, triggerRef: React.RefObject<HTMLButtonElement>, width?: number, height?: number }) {
+    const ref = useRef<HTMLDivElement>(null);
+    const {left, top} =  getChatPosition(position, triggerRef.current!.getBoundingClientRect(), width,height);
     return (
-        <div className={'absolute '+ relativePosition}>
-            <div className="flex flex-col bg-white w-72 h-80 rounded-lg shadow-md border border-gray-100">
+        <div className='absolute' style={{top,left}}>
+            <div ref={ref} className="flex flex-col w-72 h-80 rounded-lg shadow-md border border-gray-100">
                 <div className="flex flex-col-reverse w-full h-full">
                     {/* Chat messages */}
                 </div>
