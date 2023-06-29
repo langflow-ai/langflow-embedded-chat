@@ -12,25 +12,27 @@ export default function ChatWindow({ position, triggerRef, width = 288, height =
     const ref = useRef<HTMLDivElement>(null);
     const lastMessage = useRef<HTMLDivElement>(null);
     const { left, top } = getChatPosition(position, triggerRef.current!.getBoundingClientRect(), width, height);
-    const [ sendindMessage, setSendingMessage ] = useState(false);
+    const [sendingMessage, setSendingMessage] = useState(false);
 
     function handleClick() {
-        if (value) {
+        if (value && value.trim() !== "") {
             setMessages((prev) => [...prev, { message: value, isSend: true }]);
             setSendingMessage(true);
             setValue('');
+            sendMessage("http://localhost:7860", "e8aa9e4e-5952-41aa-a626-0e05573b50e1", value)
+            .then((res) => {
+                if (res.data && res.data.result && res.data.result.response){
+                    setMessages((prev) => [...prev, { message: res.data.result.response, isSend: false }]);
+                }
+                setSendingMessage(false);
+            }).catch((err) => {
+                // console.log(err);
+                console.log(sendingMessage);
+                // setSendingMessage(false);
+            });
         }
-        sendMessage("http://localhost:7860","e8aa9e4e-5952-41aa-a626-0e05573b50e1",value)
-        .then((res) => {
-            if(res.data && res.data.result && res.data.result.response)
-            setMessages((prev) => [...prev, { message: res.data.result.response, isSend: false }]);
-            setSendingMessage(false);
-        }).catch((err) => {
-            console.log(err);
-            setSendingMessage(false);
-        });
-
     }
+
     useEffect(() => {
         if (lastMessage.current) lastMessage.current.scrollIntoView({ behavior: "smooth" });
     }, [messages]);
@@ -54,8 +56,8 @@ export default function ChatWindow({ position, triggerRef, width = 288, height =
                         placeholder="Type your message..."
                         className="px-4 py-2 h-full w-full rounded-l-lg focus:outline-none"
                     />
-                    <button disabled={sendindMessage} onClick={handleClick}>
-                        <Send className='hover:stroke-blue-400 stroke-blue-500 w-6 h-6 mr-3' />
+                    <button disabled={sendingMessage} onClick={handleClick}>
+                        <Send className={"w-6 h-6 mr-3 "+(!sendingMessage ? 'hover:stroke-blue-400 stroke-blue-500':"stroke-gray-400")} />
                     </button>
                 </div>
             </div>
