@@ -5,9 +5,8 @@ import { ChatMessageType } from '../../types/chatWidget';
 import ChatMessage from './chatMessage';
 import { sendMessage } from '../../controllers';
 
-export default function ChatWindow({ position, triggerRef, width = 288, height = 320 }:
-    { position: string, triggerRef: React.RefObject<HTMLButtonElement>, width?: number, height?: number }) {
-    const [messages, setMessages] = useState<ChatMessageType[]>([]);
+export default function ChatWindow({ updateLastMessage,messages,addMessage,position, triggerRef, width = 288, height = 320 }:
+    {updateLastMessage:Function,messages:ChatMessageType[], addMessage:Function, position: string, triggerRef: React.RefObject<HTMLButtonElement>, width?: number, height?: number }) {
     const [value, setValue] = useState<string>("");
     const ref = useRef<HTMLDivElement>(null);
     const lastMessage = useRef<HTMLDivElement>(null);
@@ -16,20 +15,20 @@ export default function ChatWindow({ position, triggerRef, width = 288, height =
 
     function handleClick() {
         if (value && value.trim() !== "") {
-            setMessages((prev) => [...prev, { message: value, isSend: true }]);
+            addMessage({ message: value, isSend: true });
             setSendingMessage(true);
             setValue('');
             sendMessage("http://localhost:7860", "e8aa9e4e-5952-41aa-a626-0e05573b50e1", value)
             .then((res) => {
                 if (res.data && res.data.result && res.data.result.response){
-                    setMessages((prev) => [...prev, { message: res.data.result.response, isSend: false }]);
+                    updateLastMessage({ message: res.data.result.response, isSend: false });
                 }
                 setSendingMessage(false);
             }).catch((err) => {
                 // console.log(err);
-                console.log(sendingMessage);
-                // setSendingMessage(false);
+                setSendingMessage(false);
             });
+            addMessage({ message: "", isSend: false })
         }
     }
 
