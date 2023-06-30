@@ -5,8 +5,11 @@ import { ChatMessageType } from '../../types/chatWidget';
 import ChatMessage from './chatMessage';
 import { sendMessage } from '../../controllers';
 
-export default function ChatWindow({ updateLastMessage,messages,addMessage,position, triggerRef, width = 288, height = 320 }:
-    {updateLastMessage:Function,messages:ChatMessageType[], addMessage:Function, position: string, triggerRef: React.RefObject<HTMLButtonElement>, width?: number, height?: number }) {
+export default function ChatWindow(
+    { removeLastMessage,updateLastMessage,messages,addMessage,position, triggerRef, width = 288, height = 320 }:
+    {
+    removeLastMessage:Function,updateLastMessage:Function,messages:ChatMessageType[],
+    addMessage:Function, position: string, triggerRef: React.RefObject<HTMLButtonElement>, width?: number, height?: number }) {
     const [value, setValue] = useState<string>("");
     const ref = useRef<HTMLDivElement>(null);
     const lastMessage = useRef<HTMLDivElement>(null);
@@ -25,7 +28,14 @@ export default function ChatWindow({ updateLastMessage,messages,addMessage,posit
                 }
                 setSendingMessage(false);
             }).catch((err) => {
-                // console.log(err);
+                const response = err.response;
+                if(err.code==="ERR_NETWORK"){
+                    updateLastMessage({ message: "Network error", isSend: false,error:true });
+                }
+                else if (response && response.status===500 && response.data && response.data.detail){
+                    updateLastMessage({ message: response.data.detail, isSend: false,error:true });
+                }
+                console.log(err);
                 setSendingMessage(false);
             });
             addMessage({ message: "", isSend: false })
@@ -40,9 +50,9 @@ export default function ChatWindow({ updateLastMessage,messages,addMessage,posit
     return (
         <div className='absolute' style={{ top, left }}>
             <div ref={ref} className="flex flex-col w-72 h-80 rounded-lg shadow-md border border-gray-100">
-                <div className="flex flex-col w-full h-full overflow-scroll scrollbar-hide">
+                <div className="flex flex-col w-full h-full overflow-x-clip overflow-scroll scrollbar-hide">
                     {messages.map((message, index) =>
-                        <ChatMessage key={index} message={message.message} isSend={message.isSend} />
+                        <ChatMessage key={index} message={message.message} isSend={message.isSend} error={message.error} />
                     )}
                     <div ref={lastMessage}></div>
                 </div>

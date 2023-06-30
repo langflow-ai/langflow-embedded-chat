@@ -15,11 +15,17 @@ export default function ChatWidget({ trigger }: { trigger?: React.CSSProperties 
     function addMessage(message: ChatMessageType) {
         setMessages((prev) => [...prev, message]);
     }
+    function removeLastMessage() {
+        setMessages((prev) => {
+            prev.pop();
+            return [...prev];
+        });
+    }
     const triggerRef = useRef<HTMLButtonElement>(null);
     return (
         <div>
             <ChatTrigger triggerRef={triggerRef} open={open} setOpen={setOpen} style={trigger} />
-            {open && <ChatWindow updateLastMessage={updateLastMessage} addMessage={addMessage} messages={messages} triggerRef={triggerRef} position="bottom-left"/>}
+            {open && <ChatWindow removeLastMessage={removeLastMessage} updateLastMessage={updateLastMessage} addMessage={addMessage} messages={messages} triggerRef={triggerRef} position="bottom-left"/>}
         </div>
     )
 }
