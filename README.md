@@ -1,46 +1,75 @@
-# Getting Started with Create React App
+# `langflow-chat` Custom Component API
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The `langflow-chat` custom component allows you to integrate a chat widget into your web application. This document provides an overview of the API for using this custom component.
 
-## Available Scripts
+## Usage
 
-In the project directory, you can run:
+To use the `langflow-chat` custom component, you need to define it using the `customElements.define()` method. Here's an example of how to do it:
 
-### `npm start`
+```javascript
+customElements.define('langflow-chat', r2wc(ChatWidget, {
+    props: {
+        chat_trigger_style: "json",
+        host_url: "string",
+        flow_id: "string",
+        tweaks:"json",
+        bot_message_style:"json",
+        user_message_style:"json",
+        chat_window_style:"json",
+        error_message_style:"json",
+        send_button_style:"json",
+        send_icon_style:"json",
+        placeholder:"string",
+        input_style:"json",
+        input_container_style:"json",
+    },
+}));
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## API Reference
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Properties
 
-### `npm test`
+The `langflow-chat` custom component accepts the following properties:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- `chat_trigger_style` (string): Specifies the style for the chat trigger element.
+- `host_url` (string): The URL of the host server for the chat widget.
+- `flow_id` (string): The ID of the chat flow.
+- `tweaks` (object): JSON object containing additional tweaks or configurations for the chat widget.
+- `bot_message_style` (object): JSON object defining the style for bot messages.
+- `user_message_style` (object): JSON object defining the style for user messages.
+- `chat_window_style` (object): JSON object defining the style for the chat window.
+- `error_message_style` (object): JSON object defining the style for error messages.
+- `send_button_style` (object): JSON object defining the style for the send button.
+- `send_icon_style` (object): JSON object defining the style for the send button icon.
+- `placeholder` (string): The placeholder text for the input field.
+- `input_style` (object): JSON object defining the style for the input field.
+- `input_container_style` (object): JSON object defining the style for the input field container.
 
-### `npm run build`
+Please note that the `json` type mentioned above indicates that the corresponding property expects a JSON object.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Example
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Here's an example of how you can use the `langflow-chat` custom component in your HTML:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```html
+<langflow-chat
+    chat_trigger_style="your-style"
+    host_url="https://example.com"
+    flow_id="your-flow-id"
+    tweaks="your-tweaks"
+    bot_message_style="your-bot-style"
+    user_message_style="your-user-style"
+    chat_window_style="your-window-style"
+    error_message_style="your-error-style"
+    send_button_style="your-button-style"
+    send_icon_style="your-icon-style"
+    placeholder="Your placeholder text"
+    input_style="your-input-style"
+    input_container_style="your-container-style"
+></langflow-chat>
+```
 
-### `npm run eject`
+Make sure to replace the placeholder values with your own styles, URLs, and IDs.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+That's it! You can now integrate the `langflow-chat` custom component into your web application and customize it using the provided properties.

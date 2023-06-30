@@ -4,7 +4,7 @@ import r2wc from '@r2wc/react-to-web-component';
 import ChatWidget from './chatWidget';
 import "./index.css"
 
-customElements.define('react-app', r2wc(ChatWidget, {
+customElements.define('langflow-chat', r2wc(ChatWidget, {
     props: {
         chat_trigger_style: "json",
         host_url: "string",
