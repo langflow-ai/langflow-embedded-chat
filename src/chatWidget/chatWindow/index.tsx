@@ -18,9 +18,15 @@ export default function ChatWindow(
         input_container_style,
         addMessage, position, triggerRef, width = 288, height = 320, tweaks }:
         {
-            bot_message_style: React.CSSProperties,
-            send_icon_style:React.CSSProperties, 
-            user_message_style: React.CSSProperties, chat_window_style: React.CSSProperties, error_message_style: React.CSSProperties, send_button_style: React.CSSProperties, placeholder: string, input_style: React.CSSProperties, input_container_style: React.CSSProperties,
+            bot_message_style?: React.CSSProperties,
+            send_icon_style?:React.CSSProperties, 
+            user_message_style?: React.CSSProperties,
+            chat_window_style?: React.CSSProperties,
+            error_message_style?: React.CSSProperties,
+            send_button_style?: React.CSSProperties,
+            placeholder?: string,
+            input_style?: React.CSSProperties,
+            input_container_style?: React.CSSProperties,
             tweaks?: { [key: string]: any },
             flowId: string,
             hostUrl: string,
