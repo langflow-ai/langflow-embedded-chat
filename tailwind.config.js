@@ -4,7 +4,11 @@ import plugin from "tailwindcss/plugin";
 module.exports = {
 	content: ["./src/**/*.{js,jsx,ts,tsx}"],
 	theme: {
-		extend: {},
+		extend: {
+			boxShadow: {
+				'equal': '0 0 10px rgba(0, 0, 0, 0.1)',
+			  }
+		},
 	},
 	plugins: [
 		plugin(function ({ addUtilities }) {

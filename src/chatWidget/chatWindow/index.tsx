@@ -1,6 +1,6 @@
 import { Send } from 'lucide-react';
 import { getChatPosition } from '../utils';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ChatMessageType } from '../../types/chatWidget';
 import ChatMessage from './chatMessage';
 import { sendMessage } from '../../controllers';
@@ -13,10 +13,15 @@ export default function ChatWindow(
         chat_window_style, 
         error_message_style, 
         send_button_style, 
+        online = true,
+        open,
+        online_message = "We'll reply as soon as we can",
+        offline_message = "We're offline now",
+        window_title = "Chat",
         placeholder, 
         input_style, 
         input_container_style,
-        addMessage, position, triggerRef, width = 288, height = 320, tweaks }:
+        addMessage, position, triggerRef, width = 450, height = 650, tweaks }:
         {
             bot_message_style?: React.CSSProperties,
             send_icon_style?:React.CSSProperties, 
@@ -24,6 +29,11 @@ export default function ChatWindow(
             chat_window_style?: React.CSSProperties,
             error_message_style?: React.CSSProperties,
             send_button_style?: React.CSSProperties,
+            online?: boolean,
+            open: boolean,
+            online_message?: string,
+            offline_message?: string,
+            window_title?: string,
             placeholder?: string,
             input_style?: React.CSSProperties,
             input_container_style?: React.CSSProperties,
@@ -47,8 +57,9 @@ export default function ChatWindow(
             setValue('');
             sendMessage(hostUrl, flowId, value, tweaks)
                 .then((res) => {
-                    if (res.data && res.data.result && res.data.result.response) {
-                        updateLastMessage({ message: res.data.result.response, isSend: false });
+                    console.log(res);
+                    if (res.data && res.data.result && res.data.result.text) {
+                        updateLastMessage({ message: res.data.result.text, isSend: false });
                     }
                     setSendingMessage(false);
                 }).catch((err) => {
@@ -72,9 +83,24 @@ export default function ChatWindow(
 
 
     return (
-        <div className='absolute' style={{ top, left }}>
-            <div style={chat_window_style} ref={ref} className="window">
-                <div className="flex flex-col w-full h-full overflow-x-clip overflow-scroll scrollbar-hide">
+        <div className={"absolute transition-all duration-300 ease-in-out origin-bottom-right " + (open ? "scale-100" : "scale-0")} style={{ top, left }}>
+            <div style={{...chat_window_style, width: width, height: height}} ref={ref} className="window">
+                <div className="header">
+                    {window_title}
+                    <div className="header-subtitle">
+                        {online ? 
+                        <>
+                        <div className="bg-green-500 rounded-full h-2 w-2"></div>
+                        {online_message}</>
+                    :
+                    <>
+                    <div className="bg-red-500 rounded-full h-2 w-2"></div>
+                        {offline_message}</>
+                    }
+                        
+                    </div>
+                </div>
+                <div className="messages_container">
                     {messages.map((message, index) =>
                         <ChatMessage
                             bot_message_style={bot_message_style}
@@ -98,7 +124,7 @@ export default function ChatWindow(
                         className="input"
                     />
                     <button style={send_button_style} disabled={sendingMessage} onClick={handleClick}>
-                        <Send style={send_icon_style} className={"w-6 h-6 mr-3 " + (!sendingMessage ? 'hover:stroke-blue-400 stroke-blue-500' : "stroke-gray-400")} />
+                        <Send style={send_icon_style} className={"w-6 h-6 mr-5 " + (!sendingMessage ? 'hover:stroke-blue-400 stroke-blue-500' : "stroke-gray-400")} />
                     </button>
                 </div>
             </div>
