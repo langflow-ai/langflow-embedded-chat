@@ -15,7 +15,7 @@ The `langflow-chat` custom component allows you to integrate a chat widget into 
 ### Properties
 
 The `langflow-chat` custom component accepts the following properties:
-
+- `chat_position` (string?): The position of the chat window. Possible values are `top-left`, `top-center`, `top-right`, `center-left`, `center-right`, `bottom-left`, `bottom-center` and `bottom-right`. Default value is `top-left`.
 - `host_url` (string): The URL of the host server for the chat widget.
 - `flow_id` (string): The ID of the flow.
 - `tweaks` (object?): JSON object containing additional tweaks for the flow.
