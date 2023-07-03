@@ -32,12 +32,12 @@ export default function ChatWindow(
             hostUrl: string,
             updateLastMessage: Function,
             messages: ChatMessageType[],
-            addMessage: Function, position: string, triggerRef: React.RefObject<HTMLButtonElement>, width?: number, height?: number
+            addMessage: Function, position?: string, triggerRef: React.RefObject<HTMLButtonElement>, width?: number, height?: number
         }) {
     const [value, setValue] = useState<string>("");
     const ref = useRef<HTMLDivElement>(null);
     const lastMessage = useRef<HTMLDivElement>(null);
-    const { left, top } = getChatPosition(position, triggerRef.current!.getBoundingClientRect(), width, height);
+    const { left, top } = getChatPosition(triggerRef.current!.getBoundingClientRect(), width, height,position);
     const [sendingMessage, setSendingMessage] = useState(false);
 
     function handleClick() {
@@ -73,7 +73,7 @@ export default function ChatWindow(
 
     return (
         <div className='absolute' style={{ top, left }}>
-            <div style={chat_window_style} ref={ref} className="flex flex-col w-72 h-80 rounded-lg shadow-md border border-gray-100">
+            <div style={chat_window_style} ref={ref} className="window">
                 <div className="flex flex-col w-full h-full overflow-x-clip overflow-scroll scrollbar-hide">
                     {messages.map((message, index) =>
                         <ChatMessage
@@ -87,7 +87,7 @@ export default function ChatWindow(
                     )}
                     <div ref={lastMessage}></div>
                 </div>
-                <div style={input_container_style} className="flex w-full h-12 items-center border-t border-gray-200">
+                <div style={input_container_style} className="input_container">
                     <input
                         value={value}
                         onChange={(e) => setValue(e.target.value)}
@@ -95,7 +95,7 @@ export default function ChatWindow(
                         type="text"
                         placeholder={placeholder||"Type your message..."}
                         style={input_style}
-                        className="px-4 py-2 h-full w-full rounded-l-lg focus:outline-none"
+                        className="input"
                     />
                     <button style={send_button_style} disabled={sendingMessage} onClick={handleClick}>
                         <Send style={send_icon_style} className={"w-6 h-6 mr-3 " + (!sendingMessage ? 'hover:stroke-blue-400 stroke-blue-500' : "stroke-gray-400")} />

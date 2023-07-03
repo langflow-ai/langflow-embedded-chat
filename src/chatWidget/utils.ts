@@ -1,9 +1,10 @@
 export function getChatPosition(
-	position: string,
 	triggerPosition: DOMRect,
 	Cwidth:number,
-	Cheight:number
-): { top: string; left: string; } {
+	Cheight:number,
+	position?: string,
+): { top: string; left: string;
+	position?: string, } {
 	if (!triggerPosition) {
 		return { top: "0px", left: "0px" }; // Return empty string if trigger position is not available
 	}
@@ -11,6 +12,7 @@ export function getChatPosition(
 	const { top, left, width, height } = triggerPosition;
 
 	const distance = 5; // Adjust this value to set the desired distance from the trigger
+	if(!position) return { top: - distance - Cheight + "px", left: -Cwidth + "px" };
 
 	switch (position) {
 		case "top-left":

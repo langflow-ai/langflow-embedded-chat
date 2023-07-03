@@ -1,3 +1,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .trigger {
+        @apply bg-blue-500 hover:bg-blue-700 w-12 h-12 text-white font-bold rounded-full flex justify-center items-center;
+    }
+    .window {
+        @apply flex flex-col w-72 h-80 rounded-lg shadow-md border border-gray-100
+    }
+    .input_container {
+        @apply flex w-full h-12 items-center border-t border-gray-200
+    }
+    .input {
+        @apply px-4 py-2 h-full w-full rounded-l-lg focus:outline-none
+    }
+    .user_message {
+        @apply rounded-lg w-fit max-w-full  px-2 py-1 break-before-all text-right rounded-br-none bg-blue-500 text-white
+    }
+    .error_message {
+        @apply bg-red-400 break-before-all rounded-lg rounded-bl-none text-left px-2 py-1 text-white
+    }
+    .bot_message {
+        @apply bg-gray-400 break-before-all rounded-lg rounded-bl-none text-left px-2 py-1 text-white
+    }
+}

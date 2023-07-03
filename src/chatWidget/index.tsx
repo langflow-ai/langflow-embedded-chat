@@ -9,11 +9,13 @@ export default function ChatWidget({ chat_trigger_style,host_url,flow_id,tweaks,
      user_message_style, 
      chat_window_style, 
      error_message_style, 
-     send_button_style, 
+     send_button_style,
+     chat_position, 
      placeholder, 
      input_style, 
      input_container_style }: 
     { send_icon_style?:React.CSSProperties,
+        chat_position?: string,
         chat_trigger_style?: React.CSSProperties, 
     bot_message_style?: React.CSSProperties, 
     user_message_style?: React.CSSProperties, 
@@ -52,7 +54,7 @@ export default function ChatWidget({ chat_trigger_style,host_url,flow_id,tweaks,
             tweaks={tweaks} flowId={flow_id} hostUrl={host_url} 
             updateLastMessage={updateLastMessage} 
             addMessage={addMessage} messages={messages} 
-            triggerRef={triggerRef} position="bottom-left"/>}
+            triggerRef={triggerRef} position={chat_position}/>}
         </div>
     )
 }
