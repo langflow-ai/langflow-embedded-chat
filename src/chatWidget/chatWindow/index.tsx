@@ -47,7 +47,11 @@ export default function ChatWindow(
     const [value, setValue] = useState<string>("");
     const ref = useRef<HTMLDivElement>(null);
     const lastMessage = useRef<HTMLDivElement>(null);
-    const { left, top } = getChatPosition(triggerRef.current!.getBoundingClientRect(), width, height,position);
+    const [windowPosition, setWindowPosition] = useState({left: "0", top: "0"})
+    useEffect(() => {
+        if(triggerRef)
+            setWindowPosition(getChatPosition(triggerRef.current!.getBoundingClientRect(), width, height,position));
+    }, [triggerRef])
     const [sendingMessage, setSendingMessage] = useState(false);
 
     function handleClick() {
@@ -83,7 +87,7 @@ export default function ChatWindow(
 
 
     return (
-        <div className={"absolute transition-all duration-300 ease-in-out origin-bottom-right " + (open ? "scale-100" : "scale-0")} style={{ top, left }}>
+        <div className={"absolute transition-all duration-300 ease-in-out origin-bottom-right " + (open ? "scale-100" : "scale-0")} style={windowPosition}>
             <div style={{...chat_window_style, width: width, height: height}} ref={ref} className="window">
                 <div className="header">
                     {window_title}
