@@ -40,3 +40,27 @@ export function getChatPosition(
 		default:
 			return { top: - distance - Cheight + "px", left: -Cwidth + "px" };	}
 }
+
+export function getAnimationOrigin(position?:string) {
+	if(!position) return "origin-bottom-right";
+	switch (position) {
+		case "top-left":
+			return 'origin-bottom-right'
+		case "top-center":
+			return "origin-bottom";
+		case "top-right":
+			return "origin-bottom-left";
+		case "center-left":
+			return "origin-center";
+		case "center-right":
+			return "origin-center";
+		case "bottom-right":
+			return "origin-top-left";
+		case "bottom-center":
+			return "origin-top";
+		case "bottom-left":
+			return "origin-top-right"
+		default:
+			return "origin-bottom-right"
+		}
+}

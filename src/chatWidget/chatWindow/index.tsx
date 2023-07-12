@@ -1,5 +1,5 @@
 import { Send } from 'lucide-react';
-import { getChatPosition } from '../utils';
+import { getAnimationOrigin, getChatPosition } from '../utils';
 import React, { useEffect, useRef, useState } from 'react';
 import { ChatMessageType } from '../../types/chatWidget';
 import ChatMessage from './chatMessage';
@@ -87,7 +87,7 @@ export default function ChatWindow(
 
 
     return (
-        <div className={"absolute transition-all duration-300 ease-in-out origin-bottom-right " + (open ? "scale-100" : "scale-0")} style={windowPosition}>
+        <div className={"absolute transition-all duration-300 ease-in-out "+ getAnimationOrigin(position) + (open ? " scale-100" : " scale-0")} style={windowPosition}>
             <div style={{...chat_window_style, width: width, height: height}} ref={ref} className="window">
                 <div className="header">
                     {window_title}
