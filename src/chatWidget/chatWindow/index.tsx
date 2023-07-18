@@ -125,7 +125,7 @@ export default function ChatWindow(
                         type="text"
                         placeholder={placeholder||"Type your message..."}
                         style={input_style}
-                        className="cl-input_element"
+                        className="cl-input-element"
                     />
                     <button style={send_button_style} disabled={sendingMessage} onClick={handleClick}>
                         <Send style={send_icon_style} className={"cl-send-icon " + (!sendingMessage ? 'cl-notsending-message' : "cl-sending-message")} />

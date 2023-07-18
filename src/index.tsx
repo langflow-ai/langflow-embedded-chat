@@ -1,11 +1,8 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
 import r2wc from '@r2wc/react-to-web-component';
 import ChatWidget from './chatWidget';
-import "./index.css"
 
 customElements.define('langflow-chat', r2wc(ChatWidget, {
-    shadow: "open",
+    shadow: "closed",
     props: {
         chat_trigger_style: "json",
         host_url: "string",
