@@ -87,24 +87,24 @@ export default function ChatWindow(
 
 
     return (
-        <div className={"absolute transition-all duration-300 ease-in-out "+ getAnimationOrigin(position) + (open ? " scale-100" : " scale-0")} style={windowPosition}>
-            <div style={{...chat_window_style, width: width, height: height}} ref={ref} className="window">
-                <div className="header">
+        <div className={"cl-chat-window "+ getAnimationOrigin(position) + (open ? " cl-scale-100" : " cl-scale-0")} style={{...windowPosition, zIndex: 9999}}>
+            <div style={{...chat_window_style, width: width, height: height}} ref={ref} className="cl-window">
+                <div className="cl-header">
                     {window_title}
-                    <div className="header-subtitle">
+                    <div className="cl-header-subtitle">
                         {online ? 
                         <>
-                        <div className="bg-green-500 rounded-full h-2 w-2"></div>
+                        <div className="cl-online-message"></div>
                         {online_message}</>
                     :
                     <>
-                    <div className="bg-red-500 rounded-full h-2 w-2"></div>
+                    <div className="cl-offline-message"></div>
                         {offline_message}</>
                     }
                         
                     </div>
                 </div>
-                <div className="messages_container">
+                <div className="cl-messages_container">
                     {messages.map((message, index) =>
                         <ChatMessage
                             bot_message_style={bot_message_style}
@@ -117,7 +117,7 @@ export default function ChatWindow(
                     )}
                     <div ref={lastMessage}></div>
                 </div>
-                <div style={input_container_style} className="input_container">
+                <div style={input_container_style} className="cl-input_container">
                     <input
                         value={value}
                         onChange={(e) => setValue(e.target.value)}
@@ -125,10 +125,10 @@ export default function ChatWindow(
                         type="text"
                         placeholder={placeholder||"Type your message..."}
                         style={input_style}
-                        className="input"
+                        className="cl-input_element"
                     />
                     <button style={send_button_style} disabled={sendingMessage} onClick={handleClick}>
-                        <Send style={send_icon_style} className={"w-6 h-6 mr-5 " + (!sendingMessage ? 'hover:stroke-blue-400 stroke-blue-500' : "stroke-gray-400")} />
+                        <Send style={send_icon_style} className={"cl-send-icon " + (!sendingMessage ? 'cl-notsending-message' : "cl-sending-message")} />
                     </button>
                 </div>
             </div>

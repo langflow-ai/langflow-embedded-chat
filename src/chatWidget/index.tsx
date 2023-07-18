@@ -47,7 +47,7 @@ export default function ChatWidget({ chat_trigger_style,host_url,flow_id,tweaks,
     }
     const triggerRef = useRef<HTMLButtonElement>(null);
     return (
-        <div>
+        <>
             <ChatTrigger triggerRef={triggerRef} open={open} setOpen={setOpen} style={chat_trigger_style} />
             <ChatWindow
             open={open}
@@ -68,6 +68,6 @@ export default function ChatWidget({ chat_trigger_style,host_url,flow_id,tweaks,
             updateLastMessage={updateLastMessage} 
             addMessage={addMessage} messages={messages} 
             triggerRef={triggerRef} position={chat_position}/>
-        </div>
+        </>
     )
 }

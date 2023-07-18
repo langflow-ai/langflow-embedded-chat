@@ -4,9 +4,9 @@ export default function ChatTrigger({ style, open, setOpen, triggerRef }: { styl
     return (
         <button ref={triggerRef} style={style}
             onClick={() => { setOpen(!open)}}
-            className="trigger transition-all">
-            <X className={"h-1/2 w-1/2 absolute transition-all duration-500 " + (open ? "scale-100" : "scale-0")} />
-            <MessageSquare className={"h-1/2 w-1/2 absolute transition-all duration-500 " + (open ? "scale-0" : "scale-100")} />
+            className="cl-trigger">
+            <X className={"cl-trigger-icon " + (open ? "cl-scale-100" : "cl-scale-0")} />
+            <MessageSquare className={"cl-trigger-icon " + (open ? "cl-scale-0" : "cl-scale-100")} />
         </button>
     )
 }

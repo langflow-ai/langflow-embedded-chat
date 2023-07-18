@@ -3,34 +3,73 @@
 @tailwind utilities;
 
 @layer components {
-    .trigger {
-        @apply bg-blue-500 hover:bg-blue-700 w-12 h-12 text-white font-bold rounded-full flex justify-center items-center;
+    .cl-trigger {
+        @apply bg-blue-500 hover:bg-blue-700 w-12 h-12 text-white font-bold rounded-full flex justify-center items-center transition-all;
     }
-    .window {
+    .cl-window {
         @apply flex flex-col rounded-2xl shadow-equal overflow-hidden
     }
-    .header-subtitle {
+    .cl-scale-100 {
+        @apply scale-100
+    }
+    .cl-scale-0 {
+        @apply scale-0
+    }
+    .cl-trigger-icon {
+        @apply h-1/2 w-1/2 absolute transition-all duration-500
+    }
+    .cl-chat-window {
+        @apply absolute transition-all duration-300 ease-in-out
+    }
+    .cl-online-message {
+        @apply bg-green-500 rounded-full h-2 w-2
+    }
+    .cl-offline-message {
+        @apply bg-red-500 rounded-full h-2 w-2
+    }
+    .cl-send-icon {
+        @apply w-6 h-6 mr-5
+    }
+    .cl-notsending-message {
+        @apply hover:stroke-blue-400 stroke-blue-500
+    }
+    .cl-sending-message {
+        @apply stroke-gray-400
+    }
+    .cl-header-subtitle {
         @apply flex items-center gap-2 text-sm font-light text-gray-600
     }
-    .header {
-        @apply flex flex-col shadow-equal z-10 py-4 px-6 text-lg font-normal
+    .cl-header {
+        @apply flex flex-col bg-white shadow-equal z-10 py-4 px-6 text-lg font-normal
     }
-    .messages_container {
+    .cl-messages_container {
         @apply px-4 py-2 flex flex-col w-full h-full overflow-x-clip overflow-scroll scrollbar-hide bg-gray-50 z-0
     }
-    .input_container {
-        @apply flex w-full items-center border-t border-gray-200
+    .cl-input_container {
+        @apply flex w-full items-center border-t border-gray-200 bg-white
     }
-    .input {
+    .cl-chat-message {
+        @apply w-full py-2 px-2 flex
+    }
+    .cl-animate-pulse {
+        @apply animate-pulse
+    }
+    .cl-justify-start {
+        @apply justify-start
+    }
+    .cl-justify-end {
+        @apply justify-end
+    }
+    .cl-input_element {
         @apply px-5 py-5 font-light h-full w-full focus:outline-none
     }
-    .user_message {
+    .cl-user_message {
         @apply rounded-xl w-fit max-w-[90%] px-4 py-2 break-before-all text-right rounded-tr-sm bg-blue-500 text-white
     }
-    .error_message {
+    .cl-error_message {
         @apply bg-red-400 w-fit max-w-[90%] break-before-all rounded-xl rounded-tl-sm text-left px-4 py-2 text-white
     }
-    .bot_message {
+    .cl-bot_message {
         @apply bg-gray-200 w-fit max-w-[90%] break-before-all rounded-xl rounded-tl-sm text-left px-4 py-2 text-gray-800
     }
 } 
