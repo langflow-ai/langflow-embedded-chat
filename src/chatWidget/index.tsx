@@ -4,6 +4,8 @@ import ChatWindow from "./chatWindow";
 import { ChatMessageType } from "../types/chatWidget";
 
 export default function ChatWidget({
+  chat_input_field,
+  chat_inputs,  
   chat_trigger_style,
   host_url,
   flow_id,
@@ -23,6 +25,8 @@ export default function ChatWidget({
   input_style,
   input_container_style,
 }: {
+  chat_inputs:Object;
+  chat_input_field: string;
   send_icon_style?: React.CSSProperties;
   chat_position?: string;
   chat_trigger_style?: React.CSSProperties;
@@ -964,6 +968,8 @@ input::-ms-input-placeholder { /* Microsoft Edge */
         style={chat_trigger_style}
       />
       <ChatWindow
+        chat_input_field={chat_input_field}
+        chat_inputs={chat_inputs}
         open={open}
         send_icon_style={send_icon_style}
         bot_message_style={bot_message_style}

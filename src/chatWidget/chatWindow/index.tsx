@@ -7,6 +7,8 @@ import { sendMessage } from '../../controllers';
 
 export default function ChatWindow(
     { flowId, hostUrl, updateLastMessage, messages,
+        chat_inputs,
+        chat_input_field,
         bot_message_style,
         send_icon_style, 
         user_message_style, 
@@ -23,6 +25,8 @@ export default function ChatWindow(
         input_container_style,
         addMessage, position, triggerRef, width = 450, height = 650, tweaks }:
         {
+            chat_inputs:Object,
+            chat_input_field: string,
             bot_message_style?: React.CSSProperties,
             send_icon_style?:React.CSSProperties, 
             user_message_style?: React.CSSProperties,
@@ -59,7 +63,7 @@ export default function ChatWindow(
             addMessage({ message: value, isSend: true });
             setSendingMessage(true);
             setValue('');
-            sendMessage(hostUrl, flowId, value, tweaks)
+            sendMessage(hostUrl, flowId, value,chat_inputs,chat_input_field, tweaks)
                 .then((res) => {
                     console.log(res);
                     if (res.data && res.data.result && res.data.result.text) {
@@ -74,7 +78,7 @@ export default function ChatWindow(
                     else if (response && response.status === 500 && response.data && response.data.detail) {
                         updateLastMessage({ message: response.data.detail, isSend: false, error: true });
                     }
-                    console.log(err);
+                    console.error(err);
                     setSendingMessage(false);
                 });
             addMessage({ message: "", isSend: false })
