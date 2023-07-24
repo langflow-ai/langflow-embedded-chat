@@ -66,8 +66,8 @@ export default function ChatWindow(
             sendMessage(hostUrl, flowId, value,chat_inputs,chat_input_field, tweaks)
                 .then((res) => {
                     console.log(res);
-                    if (res.data && res.data.result && res.data.result.text) {
-                        updateLastMessage({ message: res.data.result.text, isSend: false });
+                    if (res.data && res.data.result && res.data.result.response) {
+                        updateLastMessage({ message: res.data.result.response, isSend: false });
                     }
                     setSendingMessage(false);
                 }).catch((err) => {

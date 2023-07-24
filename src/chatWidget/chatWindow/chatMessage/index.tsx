@@ -10,7 +10,7 @@ export default function ChatMessage({ message, isSend, error, user_message_style
                     {message}                
                 </div> :
             <div style={bot_message_style} className={"cl-bot_message"}>
-                {message==="" ? <div className="cl-animate-pulse"><MoreHorizontal/></div> : message}
+                {message === "" ? <div className="cl-animate-pulse"><MoreHorizontal/></div> : message}
             </div>}
         </div>)
 }
