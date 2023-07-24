@@ -109,7 +109,7 @@ export default function ChatWindow({
               });
             } else {
               updateLastMessage({
-                message: "Output key not defined or not existent!",
+                message: "Multiple output keys were detected in the response. Please, define the output key to specify the intended response.",
                 isSend: false,
                 error: true,
               });
