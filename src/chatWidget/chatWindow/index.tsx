@@ -88,7 +88,6 @@ export default function ChatWindow({
       setValue("");
       sendMessage(hostUrl, flowId, value, chat_inputs, chat_input_field, tweaks)
         .then((res) => {
-          console.log(res);
           if (
             res.data &&
             res.data.result &&
