@@ -23,7 +23,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "npm run build:react && npm run build:bundle",
+    "build": "npm install --legacy-peer-deps && npm run build:react && npm run build:bundle",
     "build:react": "react-scripts build",
     "build:bundle": "webpack --config webpack.config.js",
     "test": "react-scripts test",
