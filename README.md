@@ -22,10 +22,6 @@ Langflow is a no-code open-source project that empowers developers to build cutt
 
 ## Installation
 
-You can choose from two installation options based on your preference:
-
-### Option 1: Local Build
-
 1. Clone this repository to your local machine:
 
 ```bash
@@ -49,18 +45,6 @@ npm run build
 ```html
 <script src="path/to/your/langflow-widget.js"></script>
 ```
-
-### Option 2: CDN Link
-
-Alternatively, you can use the Langflow Widget directly from the CDN by including the following script tag in your HTML:
-
-```html
-<script src="https://cdn.example.com/langflow-widget.js"></script>
-```
-
-Make sure to replace `https://cdn.example.com/langflow-widget.js` with the actual URL of the CDN hosting the Langflow Widget.
-
-Now, users can choose to either build the project locally or use the CDN link based on their needs. This provides them with flexibility and convenience when integrating the Langflow Widget into their applications. If you have any more updates or changes, feel free to let me know! I'm here to assist you further. Happy coding!
 
 ## Usage
 
