@@ -23,6 +23,7 @@ customElements.define('langflow-chat', r2wc(ChatWidget, {
         send_button_style:"json",
         send_icon_style:"json",
         placeholder:"string",
+        placeholder_sending:"string",
         input_style:"json",
         input_container_style:"json",
         chat_position:"string",

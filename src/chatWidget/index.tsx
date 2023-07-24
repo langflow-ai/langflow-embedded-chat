@@ -26,6 +26,7 @@ export default function ChatWidget({
   chat_position,
   placeholder,
   input_style,
+  placeholder_sending,
   input_container_style,
 }: {
   chat_inputs: Object;
@@ -45,6 +46,7 @@ export default function ChatWidget({
   window_title?: string;
   error_message_style?: React.CSSProperties;
   send_button_style?: React.CSSProperties;
+  placeholder_sending?: string;
   placeholder?: string;
   input_style?: React.CSSProperties;
   input_container_style?: React.CSSProperties;
@@ -991,6 +993,7 @@ input::-ms-input-placeholder { /* Microsoft Edge */
         online_message={online_message}
         offline_message={offline_message}
         chat_output_key={chat_output_key}
+        placeholder_sending={placeholder_sending}
         window_title={window_title}
         input_container_style={input_container_style}
         tweaks={tweaks}

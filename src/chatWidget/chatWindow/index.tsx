@@ -17,6 +17,7 @@ export default function ChatWindow({
   user_message_style,
   chat_window_style,
   error_message_style,
+  placeholder_sending,
   send_button_style,
   online = true,
   open,
@@ -45,6 +46,7 @@ export default function ChatWindow({
   online?: boolean;
   open: boolean;
   online_message?: string;
+  placeholder_sending?: string;
   offline_message?: string;
   chat_output_key?: string;
   window_title?: string;
@@ -200,7 +202,8 @@ export default function ChatWindow({
               if (e.key === "Enter") handleClick();
             }}
             type="text"
-            placeholder={placeholder || "Type your message..."}
+            disabled={sendingMessage}
+            placeholder={sendingMessage ? (placeholder_sending || "Thinking...") : (placeholder || "Type your message...")}
             style={input_style}
             className="cl-input-element"
           />
