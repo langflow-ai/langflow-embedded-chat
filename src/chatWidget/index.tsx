@@ -5,7 +5,7 @@ import { ChatMessageType } from "../types/chatWidget";
 
 export default function ChatWidget({
   chat_input_field,
-  chat_inputs,  
+  chat_inputs,
   chat_trigger_style,
   host_url,
   flow_id,
@@ -14,18 +14,21 @@ export default function ChatWidget({
   bot_message_style,
   user_message_style,
   chat_window_style,
+  height,
+  width,
   error_message_style,
   send_button_style,
   online,
   online_message,
   offline_message,
+  chat_output_key,
   window_title,
   chat_position,
   placeholder,
   input_style,
   input_container_style,
 }: {
-  chat_inputs:Object;
+  chat_inputs: Object;
   chat_input_field: string;
   send_icon_style?: React.CSSProperties;
   chat_position?: string;
@@ -36,6 +39,9 @@ export default function ChatWidget({
   online?: boolean;
   online_message?: string;
   offline_message?: string;
+  chat_output_key?: string;
+  height?: number;
+  width?: number;
   window_title?: string;
   error_message_style?: React.CSSProperties;
   send_button_style?: React.CSSProperties;
@@ -971,6 +977,8 @@ input::-ms-input-placeholder { /* Microsoft Edge */
         chat_input_field={chat_input_field}
         chat_inputs={chat_inputs}
         open={open}
+        height={height}
+        width={width}
         send_icon_style={send_icon_style}
         bot_message_style={bot_message_style}
         user_message_style={user_message_style}
@@ -982,6 +990,7 @@ input::-ms-input-placeholder { /* Microsoft Edge */
         online={online}
         online_message={online_message}
         offline_message={offline_message}
+        chat_output_key={chat_output_key}
         window_title={window_title}
         input_container_style={input_container_style}
         tweaks={tweaks}
