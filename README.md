@@ -102,12 +102,6 @@ Use the widget API to customize your widget:
 | width                 | number    | No       |
 | window_title          | string    | No       |
 
-
-
-## Contributing
-
-We welcome contributions from the community! If you'd like to contribute to the Langflow Widget project, please follow our [contribution guidelines](https://github.com/logspace-ai/langflow-embedded-chat/tree/main/CONTRIBUTING.md).
-
 ## License
 
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT) - see the [LICENSE](https://github.com/logspace-ai/langflow-embedded-chat/tree/main/LICENSE) file for details.
