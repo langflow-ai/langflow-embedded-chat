@@ -1,33 +1,113 @@
-# `langflow-chat` Custom Component API
+# Langflow Embedded Chat ⛓️
 
-The `langflow-chat` custom component allows you to integrate a chat widget into your web application. This document provides an overview of the API for using this custom component.
+Welcome to the Langflow Embedded Chat repository! 🎉
 
-## Usage
-```html
-<langflow-chat
-    host_url="https://example.com"
-    flow_id="your-flow-id"
-></langflow-chat>
+The Langflow Embedded Chat is a powerful web component that enables seamless communication with the [Langflow ⛓️](https://github.com/logspace-ai/langflow). This widget provides a chat interface, allowing you to integrate Langflow ⛓️ into your web applications effortlessly.
+
+[![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+
+## What is Langflow?
+
+Langflow is a no-code open-source project that empowers developers to build cutting-edge applications using Language Model technologies. With Langflow, you can leverage the power of LLMs (Large Language Models) to enhance user interactions, generate human-like text, and gain valuable insights from natural language data.
+
+## Features
+
+🌟 Seamless Integration: Easily integrate the Langflow Widget into your website or web application with just a few lines of JavaScript.
+
+🚀 Interactive Chat Interface: Engage your users with a user-friendly chat interface, powered by Langflow's advanced language understanding capabilities.
+
+🎛️ Customizable Styling: Customize the appearance of the chat widget to match your application's design and branding.
+
+🌐 Multilingual Support: Communicate with users in multiple languages, opening up your application to a global audience.
+
+## Installation
+
+You can choose from two installation options based on your preference:
+
+### Option 1: Local Build
+
+1. Clone this repository to your local machine:
+
+```bash
+git clone https://github.com/logspace-ai/langflow-embedded-chat.git
 ```
 
-## API Reference
+2. Navigate to the project directory:
 
-### Properties
+```bash
+cd langflow-embedded-chat
+```
 
-The `langflow-chat` custom component accepts the following properties:
-- `chat_position` (string?): The position of the chat window. Possible values are `top-left`, `top-center`, `top-right`, `center-left`, `center-right`, `bottom-left`, `bottom-center` and `bottom-right`. Default value is `top-left`.
-- `host_url` (string): The URL of the host server for the chat widget.
-- `flow_id` (string): The ID of the flow.
-- `tweaks` (object?): JSON object containing additional tweaks for the flow.
-- `chat_trigger_style` (object?): JSON object defining the style for chat trigger.
-- `bot_message_style` (object?): JSON object defining the style for bot messages.
-- `user_message_style` (object?): JSON object defining the style for user messages.
-- `chat_window_style` (object?): JSON object defining the style for the chat window.
-- `error_message_style` (object?): JSON object defining the style for error messages.
-- `send_button_style` (object?): JSON object defining the style for the send button.
-- `send_icon_style` (object?): JSON object defining the style for the send button icon.
-- `input_style` (object?): JSON object defining the style for the input field.
-- `input_container_style` (object?): JSON object defining the style for the input field container.
-- `placeholder` (string): The placeholder text for the input field.
+3. Build the project to generate the bundle:
 
-That's it! You can now integrate the `langflow-chat` custom component into your web application and customize it using the provided properties.
+```bash
+npm run build
+```
+
+5. After the build process completes, you'll find the bundle in the `dist/build/static/js` folder. You can include this JavaScript file in your HTML:
+
+```html
+<script src="path/to/your/langflow-widget.js"></script>
+```
+
+### Option 2: CDN Link
+
+Alternatively, you can use the Langflow Widget directly from the CDN by including the following script tag in your HTML:
+
+```html
+<script src="https://cdn.example.com/langflow-widget.js"></script>
+```
+
+Make sure to replace `https://cdn.example.com/langflow-widget.js` with the actual URL of the CDN hosting the Langflow Widget.
+
+Now, users can choose to either build the project locally or use the CDN link based on their needs. This provides them with flexibility and convenience when integrating the Langflow Widget into their applications. If you have any more updates or changes, feel free to let me know! I'm here to assist you further. Happy coding!
+
+## Usage
+
+```html
+  <langflow-chat
+    chat_input_field="the field in the flow that is used as chat input"
+    chat_inputs='your input object'
+    host_url="langflow url"
+    flow_id="your_flow_id"
+  ></langflow-chat>
+```
+
+## Configuration
+
+Use the widget API to customize your widget:
+
+| Prop                  | Type      | Required |
+|-----------------------|-----------|----------|
+| bot_message_style     | json      | No       |
+| chat_input_field      | string    | Yes      |
+| chat_inputs           | json      | Yes      |
+| chat_position         | string    | No       |
+| chat_trigger_style    | json      | No       |
+| chat_window_style     | json      | No       |
+| error_message_style   | json      | No       |
+| flow_id               | string    | Yes      |
+| height                | number    | No       |
+| host_url              | string    | Yes      |
+| input_container_style | json      | No       |
+| input_style           | json      | No       |
+| online                | boolean   | No       |
+| online_message        | string    | No       |
+| placeholder           | string    | No       |
+| placeholder_sending   | string    | No       |
+| send_button_style     | json      | No       |
+| send_icon_style       | json      | No       |
+| tweaks                | json      | No       |
+| user_message_style    | json      | No       |
+| width                 | number    | No       |
+| window_title          | string    | No       |
+
+
+
+## Contributing
+
+We welcome contributions from the community! If you'd like to contribute to the Langflow Widget project, please follow our [contribution guidelines](https://github.com/logspace-ai/langflow-embedded-chat/tree/main/CONTRIBUTING.md).
+
+## License
+
+This project is licensed under the [MIT License](https://opensource.org/licenses/MIT) - see the [LICENSE](https://github.com/logspace-ai/langflow-embedded-chat/tree/main/LICENSE) file for details.
