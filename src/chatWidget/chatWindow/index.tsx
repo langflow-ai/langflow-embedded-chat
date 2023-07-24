@@ -94,18 +94,17 @@ export default function ChatWindow({
             res.data.result &&
             Object.keys(res.data.result).length > 0
           ) {
-            if (Object.keys(res.data.result).length === 1) {
+            if (chat_output_key &&
+            res.data.result[chat_output_key]) {
               updateLastMessage({
-                message: Object.values(res.data.result)[0],
+                message: res.data.result[chat_output_key],
                 isSend: false,
               });
             } else if (
-              Object.keys(res.data.result).length > 1 &&
-              chat_output_key &&
-              res.data.result[chat_output_key]
+              Object.keys(res.data.result).length === 1
             ) {
               updateLastMessage({
-                message: res.data.result[chat_output_key],
+                message: Object.values(res.data.result)[0],
                 isSend: false,
               });
             } else {
