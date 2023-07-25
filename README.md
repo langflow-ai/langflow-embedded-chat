@@ -22,6 +22,16 @@ Langflow is a no-code open-source project that empowers developers to build cutt
 
 ## Installation
 
+### Option 1: CDN Link
+
+Use the Langflow Widget directly from the CDN by including the following script tag in your HTML:
+
+```html
+<script src="https://cdn.example.com/langflow-widget.js"></script>
+```
+
+### Option 2: Local Build
+
 1. Clone this repository to your local machine:
 
 ```bash
