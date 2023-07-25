@@ -63,7 +63,7 @@ npm run build
 <head>
 <script src="https://cdn.jsdelivr.net/gh/logspace-ai/langflow-embedded-chat@main/dist/build/static/js/bundle.min.js"></script>
 </head>
-<body style="width: 100vh; height: 100vh; ">
+<body>
 <langflow-chat
     chat_input_field="the field in the flow that is used as chat input"
     chat_inputs='your input object'
