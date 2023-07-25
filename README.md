@@ -65,8 +65,8 @@ npm run build
 </head>
 <body>
 <langflow-chat
-    chat_input_field="the field in the flow that is used as chat input"
-    chat_inputs='your input object'
+    chat_input_field="input"
+    chat_inputs='{"input":""}'
     host_url="langflow url"
     flow_id="your_flow_id"
   ></langflow-chat>
