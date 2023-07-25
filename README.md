@@ -58,6 +58,7 @@ npm run build
 
 ## Usage
 
+### on simple HTML
 ```html
 <html lang="en">
 <head>
@@ -72,6 +73,26 @@ npm run build
   ></langflow-chat>
 </body>
 </html>
+```
+
+### on React
+ Import the js bundle in the index.html of your react project
+```html
+<script src="https://cdn.jsdelivr.net/gh/logspace-ai/langflow-embedded-chat@main/dist/build/static/js/bundle.min.js"></script>
+```
+Encapsulate your custom element in a react component
+```html
+export default function ChatWidget() {
+  return (
+    <div>
+<langflow-chat
+    chat_input_field="input"
+    chat_inputs='{"input":""}'
+    host_url="langflow url"
+    flow_id="your_flow_id"></langflow-chat>
+    </div>
+  );
+}
 ```
 
 ## Configuration
