@@ -49,12 +49,19 @@ npm run build
 ## Usage
 
 ```html
-  <langflow-chat
+<html lang="en">
+<head>
+<script src="path/to/your/langflow-widget.js"></script>
+</head>
+<body style="width: 100vh; height: 100vh; ">
+<langflow-chat
     chat_input_field="the field in the flow that is used as chat input"
     chat_inputs='your input object'
     host_url="langflow url"
     flow_id="your_flow_id"
   ></langflow-chat>
+</body>
+</html>
 ```
 
 ## Configuration
