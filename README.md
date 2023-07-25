@@ -86,6 +86,116 @@ Use the widget API to customize your widget:
 | width                 | number    | No       |
 | window_title          | string    | No       |
 
+- **bot_message_style:**
+  - Type: JSON
+  - Required: No
+  - Description: Styling options for formatting bot messages in the chat window.
+
+- **chat_input_field:**
+  - Type: String
+  - Required: Yes
+  - Description: Specifies the input field type for chat messages.
+
+- **chat_inputs:**
+  - Type: JSON
+  - Required: Yes
+  - Description: Defines the chat input elements and their values.
+
+- **chat_position:**
+  - Type: String
+  - Required: No
+  - Description: Determines the position of the chat window (top-left, top-center, top-right, center-left, center-right, bottom-right, bottom-center, bottom-left).
+
+- **chat_trigger_style:**
+  - Type: JSON
+  - Required: No
+  - Description: Styling options for the chat trigger.
+
+- **chat_window_style:**
+  - Type: JSON
+  - Required: No
+  - Description: Styling options for the overall chat window.
+
+- **error_message_style:**
+  - Type: JSON
+  - Required: No
+  - Description: Styling options for error messages in the chat window.
+
+- **flow_id:**
+  - Type: String
+  - Required: Yes
+  - Description: Identifier for the flow associated with the component.
+
+- **height:**
+  - Type: Number
+  - Required: No
+  - Description: Specifies the height of the chat window in pixels.
+
+- **host_url:**
+  - Type: String
+  - Required: Yes
+  - Description: The URL of the host for communication with the chat component.
+
+- **input_container_style:**
+  - Type: JSON
+  - Required: No
+  - Description: Styling options for the input container where chat messages are typed.
+
+- **input_style:**
+  - Type: JSON
+  - Required: No
+  - Description: Styling options for the chat input field.
+
+- **Online:**
+  - Type: Boolean
+  - Required: No
+  - Description: Indicates if the chat component is online or offline.
+
+- **online_message:**
+  - Type: String
+  - Required: No
+  - Description: Custom message to display when the chat component is online.
+
+- **placeholder:**
+  - Type: String
+  - Required: No
+  - Description: Placeholder text for the chat input field.
+
+- **placeholder_sending:**
+  - Type: String
+  - Required: No
+  - Description: Placeholder text to display while a message is being sent.
+
+- **send_button_style:**
+  - Type: JSON
+  - Required: No
+  - Description: Styling options for the send button in the chat window.
+
+- **send_icon_style:**
+  - Type: JSON
+  - Required: No
+  - Description: Styling options for the send icon in the chat window.
+
+- **tweaks:**
+  - Type: JSON
+  - Required: No
+  - Description: Additional custom tweaks for the associated flow.
+
+- **user_message_style:**
+  - Type: JSON
+  - Required: No
+  - Description: Styling options for formatting user messages in the chat window.
+
+- **width:**
+  - Type: Number
+  - Required: No
+  - Description: Specifies the width of the chat window in pixels.
+
+- **window_title:**
+  - Type: String
+  - Required: No
+  - Description: Title for the chat window, displayed in the header or title bar.
+
 ## License
 
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT) - see the [LICENSE](https://github.com/logspace-ai/langflow-embedded-chat/tree/main/LICENSE) file for details.
