@@ -69,6 +69,7 @@ Use the widget API to customize your widget:
 | chat_position         | string    | No       |
 | chat_trigger_style    | json      | No       |
 | chat_window_style     | json      | No       |
+| chat_output_key       | string    | No       |
 | error_message_style   | json      | No       |
 | flow_id               | string    | Yes      |
 | height                | number    | No       |
@@ -100,6 +101,11 @@ Use the widget API to customize your widget:
   - Type: JSON
   - Required: Yes
   - Description: Defines the chat input elements and their values.
+ 
+- **chat_output_key:**
+  - Type: String
+  - Required: No
+  - Description: Specify which output to choose if there is more than one output.
 
 - **chat_position:**
   - Type: String
