@@ -78,7 +78,7 @@ export default function ChatWindow({
           position
         )
       );
-  }, [triggerRef]);
+  }, [triggerRef, width, height, position]);
   const [sendingMessage, setSendingMessage] = useState(false);
 
   function handleClick() {
