@@ -244,8 +244,8 @@ Use the widget API to customize your widget:
 Try out or [live example](https://codesandbox.io/s/langflow-embedded-chat-example-dv9zpx) to see how the Langflow Embedded Chat ⛓️ works. 
 
 1. first create a Flow and save it using [Langflow ⛓️](https://github.com/logspace-ai/langflow).
-2. after that get the hosted URL to use in the live example
-3. If you are using a public host (like [Hugging Face Spaces](https://huggingface.co/spaces/Logspace/Langflow)) use tweaks to keep your API keys safe
+2. Get the hosted URL to use in the live example.
+3. If you are using a public host (like [Hugging Face Spaces](https://huggingface.co/spaces/Logspace/Langflow)) use tweaks to keep your API keys safe.
 
 ## License
 
