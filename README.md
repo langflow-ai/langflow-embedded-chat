@@ -240,6 +240,13 @@ Use the widget API to customize your widget:
   - Required: No
   - Description: Title for the chat window, displayed in the header or title bar.
 
+## Live example:
+Try out or [live example](https://codesandbox.io/s/langflow-embedded-chat-example-dv9zpx) to see how the Langflow Embedded Chat ⛓️ works. 
+
+1. first create a Flow and save it using [Langflow ⛓️](https://github.com/logspace-ai/langflow).
+2. after that get the hosted URL to use in the live example
+3. If you are using a public host (like [Hugging Face Spaces](https://huggingface.co/spaces/Logspace/Langflow)) use tweaks to keep your API keys safe
+
 ## License
 
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT) - see the [LICENSE](https://github.com/logspace-ai/langflow-embedded-chat/tree/main/LICENSE) file for details.
