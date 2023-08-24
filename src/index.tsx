@@ -4,6 +4,7 @@ import ChatWidget from './chatWidget';
 customElements.define('langflow-chat', r2wc(ChatWidget, {
     shadow: "closed",
     props: {
+        api_key: "string",
         chat_input_field:"string",
         chat_inputs: "json",
         chat_trigger_style: "json",
