@@ -6,6 +6,7 @@ import ChatMessage from "./chatMessage";
 import { sendMessage } from "../../controllers";
 
 export default function ChatWindow({
+  api_key,
   flowId,
   hostUrl,
   updateLastMessage,
@@ -35,6 +36,7 @@ export default function ChatWindow({
   height = 650,
   tweaks,
 }: {
+  api_key?: string;
   chat_inputs: Object;
   chat_input_field: string;
   bot_message_style?: React.CSSProperties;
@@ -86,7 +88,7 @@ export default function ChatWindow({
       addMessage({ message: value, isSend: true });
       setSendingMessage(true);
       setValue("");
-      sendMessage(hostUrl, flowId, value, chat_inputs, chat_input_field, tweaks)
+      sendMessage(hostUrl, flowId, value, chat_inputs, chat_input_field, tweaks,api_key)
         .then((res) => {
           if (
             res.data &&
