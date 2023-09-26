@@ -11,7 +11,7 @@ export async function sendMessage(baseUrl: string, flowId: string, message: stri
     }
     const headers:{[key:string]:string}= {"Content-Type": "application/json"}
     if( api_key){
-        headers["api-key"]=api_key;
+        headers["x-api-key"]=api_key;
     }
     let response = axios.post(`${baseUrl}/api/v1/process/${flowId}`, data,{headers});
     return response;
