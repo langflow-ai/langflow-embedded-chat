@@ -35,6 +35,7 @@ export default function ChatWindow({
   width = 450,
   height = 650,
   tweaks,
+  sessionId
 }: {
   api_key?: string;
   chat_inputs: Object;
@@ -65,6 +66,7 @@ export default function ChatWindow({
   triggerRef: React.RefObject<HTMLButtonElement>;
   width?: number;
   height?: number;
+  sessionId: React.MutableRefObject<string>;
 }) {
   const [value, setValue] = useState<string>("");
   const ref = useRef<HTMLDivElement>(null);
@@ -88,7 +90,7 @@ export default function ChatWindow({
       addMessage({ message: value, isSend: true });
       setSendingMessage(true);
       setValue("");
-      sendMessage(hostUrl, flowId, value, chat_inputs, chat_input_field, tweaks,api_key)
+      sendMessage(hostUrl, flowId, value, chat_inputs,chat_input_field,sessionId, tweaks,api_key)
         .then((res) => {
           if (
             res.data &&
@@ -115,6 +117,9 @@ export default function ChatWindow({
                 error: true,
               });
             }
+          }
+          if (res.data && res.data.session_id) {
+            sessionId.current = res.data.session_id;
           }
           setSendingMessage(false);
         })
