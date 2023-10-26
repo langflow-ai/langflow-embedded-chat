@@ -58,6 +58,7 @@ export default function ChatWidget({
 }) {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessageType[]>([]);
+  const sessionId = useRef("");
   function updateLastMessage(message: ChatMessageType) {
     setMessages((prev) => {
       prev[prev.length - 1] = message;
@@ -1007,6 +1008,7 @@ input::-ms-input-placeholder { /* Microsoft Edge */
         messages={messages}
         triggerRef={triggerRef}
         position={chat_position}
+        sessionId={sessionId}
       />
     </>
   );
