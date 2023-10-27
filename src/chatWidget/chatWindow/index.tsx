@@ -82,8 +82,14 @@ export default function ChatWindow({
           position
         )
       );
-  }, [triggerRef, width, height, position]);
-  const [sendingMessage, setSendingMessage] = useState(false);
+    }, [triggerRef, width, height, position]);
+    const [sendingMessage, setSendingMessage] = useState(false);
+
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    const handleBlur = () => {
+      if (inputRef.current) { inputRef.current.focus(); }
+    };
 
   function handleClick() {
     if (value && value.trim() !== "") {
@@ -201,6 +207,8 @@ export default function ChatWindow({
         </div>
         <div style={input_container_style} className="cl-input_container">
           <input
+            ref={inputRef}
+            onBlur={handleBlur}
             value={value}
             onChange={(e) => setValue(e.target.value)}
             onKeyDown={(e) => {
