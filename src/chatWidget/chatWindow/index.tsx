@@ -72,6 +72,7 @@ export default function ChatWindow({
   const ref = useRef<HTMLDivElement>(null);
   const lastMessage = useRef<HTMLDivElement>(null);
   const [windowPosition, setWindowPosition] = useState({ left: "0", top: "0" });
+  const inputRef = useRef<HTMLInputElement>(null); /* User input Ref */
   useEffect(() => {
     if (triggerRef)
       setWindowPosition(
@@ -83,6 +84,17 @@ export default function ChatWindow({
         )
       );
   }, [triggerRef, width, height, position]);
+
+  /* Initial listener for loss of focus that refocuses User input after a small delay */
+
+  const handleBlur = () => {
+    setTimeout(() => {
+      inputRef.current?.focus();
+    }, 50);
+  }; 
+  const inputElem = inputRef.current;
+  inputElem?.addEventListener('blur', handleBlur);
+
   const [sendingMessage, setSendingMessage] = useState(false);
 
   function handleClick() {
@@ -155,6 +167,26 @@ export default function ChatWindow({
       lastMessage.current.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+/* Refocus the User input whenever a new response is returned from the LLM */
+
+  useEffect(() => {
+    const handleBlur = () => {
+      // after a slight delay
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 100);
+    };
+    const inputElem = inputRef.current;
+    inputElem?.addEventListener('blur', handleBlur);
+    inputRef.current?.focus();
+
+    // Clean up the listener when the component is unmounted
+  
+    return () => {
+      inputElem?.removeEventListener('blur', handleBlur);
+    };
+  }, [messages]);
+
   return (
     <div
       className={
@@ -210,6 +242,7 @@ export default function ChatWindow({
             disabled={sendingMessage}
             placeholder={sendingMessage ? (placeholder_sending || "Thinking...") : (placeholder || "Type your message...")}
             style={input_style}
+            ref={inputRef}
             className="cl-input-element"
           />
           <button
