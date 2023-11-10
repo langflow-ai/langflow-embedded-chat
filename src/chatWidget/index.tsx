@@ -29,6 +29,7 @@ export default function ChatWidget({
   input_style,
   placeholder_sending,
   input_container_style,
+  additional_headers,
 }: {
   api_key?: string;
   chat_inputs: Object;
@@ -55,6 +56,7 @@ export default function ChatWidget({
   host_url: string;
   flow_id: string;
   tweaks?: { [key: string]: any };
+  additional_headers?: {[key:string]:string};
 }) {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessageType[]>([]);
@@ -1009,6 +1011,7 @@ input::-ms-input-placeholder { /* Microsoft Edge */
         triggerRef={triggerRef}
         position={chat_position}
         sessionId={sessionId}
+        additional_headers={additional_headers}
       />
     </>
   );
