@@ -124,7 +124,7 @@ Use the widget API to customize your widget:
 | user_message_style    | json      | No       |
 | width                 | number    | No       |
 | window_title          | string    | No       |
-| additionalHeaders     | json      | No       |
+| additional_headers    | json      | No       |
 
 - **bot_message_style:**
   - Type: JSON
@@ -241,7 +241,7 @@ Use the widget API to customize your widget:
   - Required: No
   - Description: Title for the chat window, displayed in the header or title bar.
 
-- **additionalHeaders:**
+- **additional_headers:**
   - Type: JSON
   - Required: No
   - Description: Additional headers to be sent to Langflow server
