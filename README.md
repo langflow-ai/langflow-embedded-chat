@@ -66,8 +66,6 @@ npm run build
 </head>
 <body>
 <langflow-chat
-    chat_input_field="input"
-    chat_inputs='{"input":""}'
     host_url="langflow url"
     flow_id="your_flow_id"
   ></langflow-chat>
@@ -86,8 +84,6 @@ export default function ChatWidget() {
   return (
     <div>
 <langflow-chat
-    chat_input_field="input"
-    chat_inputs='{"input":""}'
     host_url="langflow url"
     flow_id="your_flow_id"></langflow-chat>
     </div>
@@ -102,12 +98,12 @@ Use the widget API to customize your widget:
 | Prop                  | Type      | Required |
 |-----------------------|-----------|----------|
 | bot_message_style     | json      | No       |
-| chat_input_field      | string    | Yes      |
-| chat_inputs           | json      | Yes      |
 | chat_position         | string    | No       |
 | chat_trigger_style    | json      | No       |
 | chat_window_style     | json      | No       |
-| chat_output_key       | string    | No       |
+| output_type           | string    | No       |
+| input_type            | string    | No       |
+| output_component      | string    | No       |
 | error_message_style   | json      | No       |
 | flow_id               | string    | Yes      |
 | height                | number    | No       |
@@ -131,21 +127,21 @@ Use the widget API to customize your widget:
   - Required: No
   - Description: Styling options for formatting bot messages in the chat window.
 
-- **chat_input_field:**
-  - Type: String
-  - Required: Yes
-  - Description: Specifies the input field type for chat messages.
-
-- **chat_inputs:**
-  - Type: JSON
-  - Required: Yes
-  - Description: Defines the chat input elements and their values.
- 
-- **chat_output_key:**
+- **input_type:**
   - Type: String
   - Required: No
-  - Description: Specify which output to choose if there is more than one output.
+  - Description: Specifies the input type for chat messages.
 
+- **output_type:**
+  - Type: String
+  - Required: No
+  - Description: Specifies the output type for chat messages.
+
+- **output_component:**
+  - Type: String
+  - Required: No
+  - Description: Defines the chat output id.
+ 
 - **chat_position:**
   - Type: String
   - Required: No
