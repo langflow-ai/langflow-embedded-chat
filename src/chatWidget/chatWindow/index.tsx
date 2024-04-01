@@ -11,8 +11,9 @@ export default function ChatWindow({
   hostUrl,
   updateLastMessage,
   messages,
-  chat_inputs,
-  chat_input_field,
+  output_type,
+  input_type,
+  output_component,
   bot_message_style,
   send_icon_style,
   user_message_style,
@@ -26,7 +27,6 @@ export default function ChatWindow({
   offline_message = "We're offline now",
   window_title = "Chat",
   placeholder,
-  chat_output_key,
   input_style,
   input_container_style,
   addMessage,
@@ -39,8 +39,9 @@ export default function ChatWindow({
   additional_headers
 }: {
   api_key?: string;
-  chat_inputs: Object;
-  chat_input_field: string;
+  output_type:string,
+  input_type:string,
+  output_component?:string,
   bot_message_style?: React.CSSProperties;
   send_icon_style?: React.CSSProperties;
   user_message_style?: React.CSSProperties;
@@ -52,7 +53,6 @@ export default function ChatWindow({
   online_message?: string;
   placeholder_sending?: string;
   offline_message?: string;
-  chat_output_key?: string;
   window_title?: string;
   placeholder?: string;
   input_style?: React.CSSProperties;
@@ -105,29 +105,32 @@ export default function ChatWindow({
       addMessage({ message: value, isSend: true });
       setSendingMessage(true);
       setValue("");
-      sendMessage(hostUrl, flowId, value, chat_inputs,chat_input_field,sessionId, tweaks,api_key, additional_headers)
+      sendMessage(hostUrl, flowId, value, input_type,output_type,sessionId,output_component, tweaks,api_key, additional_headers)
         .then((res) => {
           if (
             res.data &&
-            res.data.result &&
-            Object.keys(res.data.result).length > 0
+            res.data.outputs &&
+            Object.keys(res.data.outputs).length > 0 &&
+            res.data.outputs[0].outputs && res.data.outputs[0].outputs.length > 0
           ) {
-            if (chat_output_key &&
-            res.data.result[chat_output_key]) {
+            const flowOutputs:Array<any> = res.data.outputs[0].outputs;
+            console.log(flowOutputs);
+            if (output_component &&
+            flowOutputs.map(e=>e.component_id).includes(output_component)) {
               updateLastMessage({
-                message: res.data.result[chat_output_key],
+                message: flowOutputs.find(e=>e.component_id===output_component).results.result,
                 isSend: false,
               });
             } else if (
-              Object.keys(res.data.result).length === 1
+              Object.keys(flowOutputs).length === 1
             ) {
               updateLastMessage({
-                message: Object.values(res.data.result)[0],
+                message: flowOutputs[0].results.result,
                 isSend: false,
               });
             } else {
               updateLastMessage({
-                message: "Multiple output keys were detected in the response. Please, define the output key to specify the intended response.",
+                message: "Multiple outputs were detected in the response. Please, define the output_component to specify the intended response.",
                 isSend: false,
                 error: true,
               });
