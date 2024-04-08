@@ -140,7 +140,7 @@ Use the widget API to customize your widget:
 - **output_component:**
   - Type: String
   - Required: No
-  - Description: Defines the chat output id.
+  - Description: Specify the output ID for chat messages; this is necessary when multiple outputs are present.
  
 - **chat_position:**
   - Type: String
