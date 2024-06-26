@@ -64,3 +64,10 @@ export function getAnimationOrigin(position?:string) {
 			return "origin-bottom-right"
 		}
 }
+
+export function extractMessageFromOutput(output:{type:string, message:any}){
+	const {type, message} = output;
+	if(type === "text") return message;
+	if(type==="object") return message.text;
+	return "Unknow message structure"
+}

@@ -1,9 +1,10 @@
 import { Send } from "lucide-react";
-import { getAnimationOrigin, getChatPosition } from "../utils";
+import { extractMessageFromOutput, getAnimationOrigin, getChatPosition } from "../utils";
 import React, { useEffect, useRef, useState } from "react";
 import { ChatMessageType } from "../../types/chatWidget";
 import ChatMessage from "./chatMessage";
 import { sendMessage } from "../../controllers";
+import ChatMessagePlaceholder from "../../chatPlaceholder";
 
 export default function ChatWindow({
   api_key,
@@ -39,9 +40,9 @@ export default function ChatWindow({
   additional_headers
 }: {
   api_key?: string;
-  output_type:string,
-  input_type:string,
-  output_component?:string,
+  output_type: string,
+  input_type: string,
+  output_component?: string,
   bot_message_style?: React.CSSProperties;
   send_icon_style?: React.CSSProperties;
   user_message_style?: React.CSSProperties;
@@ -68,7 +69,7 @@ export default function ChatWindow({
   width?: number;
   height?: number;
   sessionId: React.MutableRefObject<string>;
-  additional_headers?: {[key:string]:string};
+  additional_headers?: { [key: string]: string };
 
 }) {
   const [value, setValue] = useState<string>("");
@@ -94,7 +95,7 @@ export default function ChatWindow({
     setTimeout(() => {
       inputRef.current?.focus();
     }, 50);
-  }; 
+  };
   const inputElem = inputRef.current;
   inputElem?.addEventListener('blur', handleBlur);
 
@@ -105,7 +106,7 @@ export default function ChatWindow({
       addMessage({ message: value, isSend: true });
       setSendingMessage(true);
       setValue("");
-      sendMessage(hostUrl, flowId, value, input_type,output_type,sessionId,output_component, tweaks,api_key, additional_headers)
+      sendMessage(hostUrl, flowId, value, input_type, output_type, sessionId, output_component, tweaks, api_key, additional_headers)
         .then((res) => {
           if (
             res.data &&
@@ -113,23 +114,27 @@ export default function ChatWindow({
             Object.keys(res.data.outputs).length > 0 &&
             res.data.outputs[0].outputs && res.data.outputs[0].outputs.length > 0
           ) {
-            const flowOutputs:Array<any> = res.data.outputs[0].outputs;
+            const flowOutputs: Array<any> = res.data.outputs[0].outputs;
             console.log(flowOutputs);
             if (output_component &&
-            flowOutputs.map(e=>e.component_id).includes(output_component)) {
-              updateLastMessage({
-                message: flowOutputs.find(e=>e.component_id===output_component).results.result,
-                isSend: false,
-              });
+              flowOutputs.map(e => e.component_id).includes(output_component)) {
+              Object.values(flowOutputs.find(e => e.component_id === output_component).outputs).forEach((output: any) => {
+                addMessage({
+                  message: extractMessageFromOutput(output),
+                  isSend: false,
+                });
+              })
             } else if (
-              Object.keys(flowOutputs).length === 1
+              flowOutputs.length === 1
             ) {
-              updateLastMessage({
-                message: flowOutputs[0].results.result,
-                isSend: false,
-              });
+              Object.values(flowOutputs[0].outputs).forEach((output: any) => {
+                addMessage({
+                  message: extractMessageFromOutput(output),
+                  isSend: false,
+                });
+              })
             } else {
-              updateLastMessage({
+              addMessage({
                 message: "Multiple outputs were detected in the response. Please, define the output_component to specify the intended response.",
                 isSend: false,
                 error: true,
@@ -164,7 +169,6 @@ export default function ChatWindow({
           console.error(err);
           setSendingMessage(false);
         });
-      addMessage({ message: "", isSend: false });
     }
   }
 
@@ -173,7 +177,7 @@ export default function ChatWindow({
       lastMessage.current.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-/* Refocus the User input whenever a new response is returned from the LLM */
+  /* Refocus the User input whenever a new response is returned from the LLM */
 
   useEffect(() => {
     const handleBlur = () => {
@@ -187,7 +191,7 @@ export default function ChatWindow({
     inputRef.current?.focus();
 
     // Clean up the listener when the component is unmounted
-  
+
     return () => {
       inputElem?.removeEventListener('blur', handleBlur);
     };
@@ -235,6 +239,9 @@ export default function ChatWindow({
               error={message.error}
             />
           ))}
+          {sendingMessage && (
+            <ChatMessagePlaceholder bot_message_style={bot_message_style} />
+          )}
           <div ref={lastMessage}></div>
         </div>
         <div style={input_container_style} className="cl-input_container">
