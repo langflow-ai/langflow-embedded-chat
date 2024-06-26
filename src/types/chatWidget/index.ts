@@ -6,4 +6,8 @@ export type ChatMessageType = {
     user_message_style?: React.CSSProperties;
     error_message_style?: React.CSSProperties;
   };
-  
+
+
+  export type ChatMessagePlaceholderType = {
+    bot_message_style?: React.CSSProperties;
+  };
