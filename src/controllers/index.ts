@@ -3,6 +3,7 @@ import axios from "axios";
 export async function sendMessage(baseUrl: string, flowId: string, message: string,input_type:string,output_type:string,sessionId:React.MutableRefObject<string>,output_component?:string, tweaks?: Object,api_key?:string,additional_headers?:{[key:string]:string}) {
     let data:any;
     data = {input_type,input_value:message,output_type}
+    console.log("data",data)
     if (tweaks) {
         data["tweaks"]= tweaks
     }
