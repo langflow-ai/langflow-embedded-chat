@@ -115,7 +115,6 @@ export default function ChatWindow({
             res.data.outputs[0].outputs && res.data.outputs[0].outputs.length > 0
           ) {
             const flowOutputs: Array<any> = res.data.outputs[0].outputs;
-            console.log(flowOutputs);
             if (output_component &&
               flowOutputs.map(e => e.component_id).includes(output_component)) {
               Object.values(flowOutputs.find(e => e.component_id === output_component).outputs).forEach((output: any) => {
