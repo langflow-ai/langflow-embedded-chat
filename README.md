@@ -27,7 +27,7 @@ Langflow is a no-code open-source project that empowers developers to build cutt
 Use the Langflow Widget directly from the CDN by including the following script tag in your HTML:
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/logspace-ai/langflow-embedded-chat@v1.0.0/dist/build/static/js/bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/logspace-ai/langflow-embedded-chat@v1.0.1/dist/build/static/js/bundle.min.js"></script>
 ```
 
 ### Option 2: Local Build
@@ -62,7 +62,7 @@ npm run build
 ```html
 <html lang="en">
 <head>
-<script src="https://cdn.jsdelivr.net/gh/logspace-ai/langflow-embedded-chat@v1.0.0/dist/build/static/js/bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/logspace-ai/langflow-embedded-chat@v1.0.1/dist/build/static/js/bundle.min.js"></script>
 </head>
 <body>
 <langflow-chat
@@ -76,7 +76,7 @@ npm run build
 ### on React
  Import the js bundle in the index.html of your react project
 ```html
-<script src="https://cdn.jsdelivr.net/gh/logspace-ai/langflow-embedded-chat@v1.0.0/dist/build/static/js/bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/logspace-ai/langflow-embedded-chat@v1.0.1/dist/build/static/js/bundle.min.js"></script>
 ```
 Encapsulate your custom element in a react component
 ```html
