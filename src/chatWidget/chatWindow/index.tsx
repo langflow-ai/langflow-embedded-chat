@@ -171,11 +171,9 @@ export default function ChatWindow({
   /* Refocus the User input whenever a new response is returned from the LLM */
 
   useEffect(() => {
-      console.log("Refocusing input");
       // after a slight delay
       setTimeout(() => {
         inputRef.current?.focus();
-        console.log("Refocusing input");
       }, 100);
   }, [messages,open]);
 
