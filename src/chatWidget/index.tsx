@@ -973,7 +973,7 @@ input::-ms-input-placeholder { /* Microsoft Edge */
 }
     `;
   return (
-    <>
+    <div style={{position:"relative"}}>
       <style dangerouslySetInnerHTML={{ __html: styles }}></style>
       <ChatTrigger
         triggerRef={triggerRef}
@@ -1010,10 +1010,10 @@ input::-ms-input-placeholder { /* Microsoft Edge */
         addMessage={addMessage}
         messages={messages}
         triggerRef={triggerRef}
-        position={chat_position ?? "bottom-right"}
+        position={chat_position}
         sessionId={sessionId}
         additional_headers={additional_headers}
       />
-    </>
+    </div>
   );
 }
