@@ -1010,7 +1010,7 @@ input::-ms-input-placeholder { /* Microsoft Edge */
         addMessage={addMessage}
         messages={messages}
         triggerRef={triggerRef}
-        position={chat_position}
+        position={chat_position ?? "bottom-right"}
         sessionId={sessionId}
         additional_headers={additional_headers}
       />
