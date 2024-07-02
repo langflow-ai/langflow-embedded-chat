@@ -3,7 +3,10 @@ export default function ChatTrigger({ style, open, setOpen, triggerRef }: { styl
 
     return (
         <button ref={triggerRef} style={style}
-            onClick={() => { setOpen(!open)}}
+            onClick={() => { setOpen(!open) }}
+            onMouseDown={(e) => {
+                e.preventDefault()
+            }}
             className="cl-trigger">
             <X className={"cl-trigger-icon " + (open ? "cl-scale-100" : "cl-scale-0")} />
             <MessageSquare className={"cl-trigger-icon " + (open ? "cl-scale-0" : "cl-scale-100")} />
