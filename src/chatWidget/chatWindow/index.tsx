@@ -91,14 +91,6 @@ export default function ChatWindow({
 
   /* Initial listener for loss of focus that refocuses User input after a small delay */
 
-  const handleBlur = () => {
-    setTimeout(() => {
-      inputRef.current?.focus();
-    }, 50);
-  };
-  const inputElem = inputRef.current;
-  inputElem?.addEventListener('blur', handleBlur);
-
   const [sendingMessage, setSendingMessage] = useState(false);
 
   function handleClick() {
@@ -179,22 +171,13 @@ export default function ChatWindow({
   /* Refocus the User input whenever a new response is returned from the LLM */
 
   useEffect(() => {
-    const handleBlur = () => {
+      console.log("Refocusing input");
       // after a slight delay
       setTimeout(() => {
         inputRef.current?.focus();
+        console.log("Refocusing input");
       }, 100);
-    };
-    const inputElem = inputRef.current;
-    inputElem?.addEventListener('blur', handleBlur);
-    inputRef.current?.focus();
-
-    // Clean up the listener when the component is unmounted
-
-    return () => {
-      inputElem?.removeEventListener('blur', handleBlur);
-    };
-  }, [messages]);
+  }, [messages,open]);
 
   return (
     <div
