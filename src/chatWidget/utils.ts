@@ -43,7 +43,7 @@ export function getChatPosition(
 }
 
 export function getAnimationOrigin(position?:string) {
-	if(!position) return "origin-bottom-right";
+	if(!position) return "origin-top-left";
 	switch (position) {
 		case "top-left":
 			return 'origin-bottom-right'
@@ -62,7 +62,7 @@ export function getAnimationOrigin(position?:string) {
 		case "bottom-left":
 			return "origin-top-right"
 		default:
-			return "origin-bottom-right"
+			return "origin-top-left"
 		}
 }
 
