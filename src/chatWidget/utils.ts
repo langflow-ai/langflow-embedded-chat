@@ -12,7 +12,7 @@ export function getChatPosition(
 	const { top, left, width, height } = triggerPosition;
 
 	const distance = 5; // Adjust this value to set the desired distance from the trigger
-	if(!position) return { top: - distance - Cheight + "px", left: -Cwidth + "px" };
+	if(!position) return { top: distance + height+ "px", left: width + "px" };
 
 	switch (position) {
 		case "top-left":
@@ -38,7 +38,8 @@ export function getChatPosition(
 		case "bottom-left":
 			return { top: distance + height+ "px", left: -Cwidth + "px"};
 		default:
-			return { top: - distance - Cheight + "px", left: -Cwidth + "px" };	}
+			return { top: distance + height+ "px", left: width + "px" };	
+		}
 }
 
 export function getAnimationOrigin(position?:string) {
