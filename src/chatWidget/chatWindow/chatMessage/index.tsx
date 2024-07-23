@@ -1,5 +1,7 @@
+import Markdown from "react-markdown";
 import { ChatMessageType } from "../../../types/chatWidget";
-import { MoreHorizontal } from "lucide-react";
+import remarkGfm from "remark-gfm";
+import rehypeMathjax from "rehype-mathjax";
 
 export default function ChatMessage({
   message,
@@ -9,6 +11,7 @@ export default function ChatMessage({
   bot_message_style,
   error_message_style,
 }: ChatMessageType) {
+
   return (
     <div
       className={
@@ -25,7 +28,13 @@ export default function ChatMessage({
         </div>
       ) : (
         <div style={bot_message_style} className={"cl-bot_message"}>
-          {message}
+          <Markdown 
+          className={"markdown-body prose flex flex-col word-break-break-word"}
+          remarkPlugins={[remarkGfm]}
+            rehypePlugins={[rehypeMathjax]}
+          >
+            {message}
+          </Markdown>
         </div>
       )}
     </div>
