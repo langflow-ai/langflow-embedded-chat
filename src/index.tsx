@@ -20,6 +20,7 @@ customElements.define('langflow-chat', r2wc(ChatWidget, {
         chat_window_style:"json",
         height:"number",
         width:"number",
+        session_id:"string",
         chat_output_key:"string",
         error_message_style:"json",
         send_button_style:"json",

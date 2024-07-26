@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import ChatTrigger from "./chatTrigger";
 import ChatWindow from "./chatWindow";
 import { ChatMessageType } from "../types/chatWidget";
+const { v4: uuidv4 } = require('uuid');
 
 export default function ChatWidget({
   api_key,
@@ -30,6 +31,7 @@ export default function ChatWidget({
   placeholder_sending,
   input_container_style,
   additional_headers,
+  session_id,
 }: {
   api_key?: string;
   input_value: string,
@@ -58,10 +60,11 @@ export default function ChatWidget({
   flow_id: string;
   tweaks?: { [key: string]: any };
   additional_headers?: { [key: string]: string };
+  session_id?: string;
 }) {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessageType[]>([]);
-  const sessionId = useRef("");
+  const sessionId = useRef(session_id ?? uuidv4());
   function updateLastMessage(message: ChatMessageType) {
     setMessages((prev) => {
       prev[prev.length - 1] = message;
