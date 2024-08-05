@@ -120,6 +120,7 @@ Use the widget API to customize your widget:
 | user_message_style    | json      | No       |
 | width                 | number    | No       |
 | window_title          | string    | No       |
+| session_id            | string    | No       |
 | additional_headers    | json      | No       |
 
 - **bot_message_style:**
@@ -236,6 +237,11 @@ Use the widget API to customize your widget:
   - Type: String
   - Required: No
   - Description: Title for the chat window, displayed in the header or title bar.
+
+- **session_id:**
+  - Type: String
+  - Required: No
+  - Description: Custom session id to override the random session id used as default.
 
 - **additional_headers:**
   - Type: JSON
