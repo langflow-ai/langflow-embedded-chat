@@ -32,6 +32,7 @@ export default function ChatWidget({
   input_container_style,
   additional_headers,
   session_id,
+  start_open=false,
 }: {
   api_key?: string;
   input_value: string,
@@ -61,8 +62,9 @@ export default function ChatWidget({
   tweaks?: { [key: string]: any };
   additional_headers?: { [key: string]: string };
   session_id?: string;
+  start_open?: boolean;
 }) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(start_open);
   const [messages, setMessages] = useState<ChatMessageType[]>([]);
   const sessionId = useRef(session_id ?? uuidv4());
   function updateLastMessage(message: ChatMessageType) {
