@@ -27,7 +27,7 @@ Langflow is a no-code open-source project that empowers developers to build cutt
 Use the Langflow Widget directly from the CDN by including the following script tag in your HTML:
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/logspace-ai/langflow-embedded-chat@v1.0.5/dist/build/static/js/bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/logspace-ai/langflow-embedded-chat@v1.0.6/dist/build/static/js/bundle.min.js"></script>
 ```
 
 ### Option 2: Local Build
@@ -62,7 +62,7 @@ npm run build
 ```html
 <html lang="en">
 <head>
-<script src="https://cdn.jsdelivr.net/gh/logspace-ai/langflow-embedded-chat@v1.0.5/dist/build/static/js/bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/logspace-ai/langflow-embedded-chat@v1.0.6/dist/build/static/js/bundle.min.js"></script>
 </head>
 <body>
 <langflow-chat
@@ -76,7 +76,7 @@ npm run build
 ### on React
  Import the js bundle in the index.html of your react project
 ```html
-<script src="https://cdn.jsdelivr.net/gh/logspace-ai/langflow-embedded-chat@v1.0.5/dist/build/static/js/bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/logspace-ai/langflow-embedded-chat@v1.0.6/dist/build/static/js/bundle.min.js"></script>
 ```
 Encapsulate your custom element in a react component
 ```html
@@ -111,6 +111,7 @@ Use the widget API to customize your widget:
 | input_container_style | json      | No       |
 | input_style           | json      | No       |
 | online                | boolean   | No       |
+| start_open            | boolean   | No       |
 | online_message        | string    | No       |
 | placeholder           | string    | No       |
 | placeholder_sending   | string    | No       |
@@ -192,6 +193,11 @@ Use the widget API to customize your widget:
   - Type: Boolean
   - Required: No
   - Description: Indicates if the chat component is online or offline.
+
+- **start_open:**
+  - Type: Boolean
+  - Required: No
+  - Description: Indicates if the chat window should be open by default.
 
 - **online_message:**
   - Type: String
