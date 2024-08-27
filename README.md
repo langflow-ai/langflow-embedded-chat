@@ -97,6 +97,7 @@ Use the widget API to customize your widget:
 
 | Prop                  | Type      | Required |
 |-----------------------|-----------|----------|
+| api_key               | string    | No       |
 | bot_message_style     | json      | No       |
 | chat_position         | string    | No       |
 | chat_trigger_style    | json      | No       |
@@ -123,6 +124,12 @@ Use the widget API to customize your widget:
 | window_title          | string    | No       |
 | session_id            | string    | No       |
 | additional_headers    | json      | No       |
+
+- **api_key:**
+  - Type: String
+  - Required: No
+  - Description: X-API-Key header to send to Langflow
+
 
 - **bot_message_style:**
   - Type: JSON
