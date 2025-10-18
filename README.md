@@ -44,7 +44,13 @@ git clone https://github.com/logspace-ai/langflow-embedded-chat.git
 cd langflow-embedded-chat
 ```
 
-3. Build the project to generate the bundle:
+3. Install the required dependencies:
+
+```bash
+npm install
+```
+
+4. Build the project to generate the bundle:
 
 ```bash
 npm run build
@@ -58,34 +64,66 @@ npm run build
 
 ## Usage
 
+### Getting Started: Where to Find Your Configuration Values
+
+Before using the widget, you'll need two key pieces of information from your Langflow instance:
+
+- **`flow_id`**: This is the unique identifier for your flow. You can find it in the Langflow interface when you open your flow - it's typically visible in the URL or in the flow settings.
+- **`host_url`**: This is the URL where your Langflow instance is hosted (e.g., `http://localhost:7860` for local development, or your production URL like `https://my-langflow.example.com`).
+- **`api_key`** (optional but recommended): Your API key for authentication. You can generate this in your Langflow settings under API Keys.
+
 ### on simple HTML
+
 ```html
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<script src="https://cdn.jsdelivr.net/gh/logspace-ai/langflow-embedded-chat@v1.0.7/dist/build/static/js/bundle.min.js"></script>
+    <meta charset="UTF-8">
+    <title>My Langflow Chat</title>
+    <script src="https://cdn.jsdelivr.net/gh/logspace-ai/langflow-embedded-chat@v1.0.7/dist/build/static/js/bundle.min.js"></script>
 </head>
 <body>
-<langflow-chat
-    host_url="langflow url"
-    flow_id="your_flow_id"
-  ></langflow-chat>
+    <h1>Welcome to My Website</h1>
+    
+    <langflow-chat
+        host_url="http://localhost:7860"
+        flow_id="your_flow_id"
+        api_key="your_api_key"
+    ></langflow-chat>
 </body>
 </html>
 ```
 
 ### on React
- Import the js bundle in the index.html of your react project
+
+Import the js bundle in the index.html of your react project
+
 ```html
 <script src="https://cdn.jsdelivr.net/gh/logspace-ai/langflow-embedded-chat@v1.0.7/dist/build/static/js/bundle.min.js"></script>
 ```
+
 Encapsulate your custom element in a react component
-```html
+
+```tsx
+import React from 'react';
+
+// Declare the custom element type for TypeScript
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'langflow-chat': any;
+    }
+  }
+}
+
 export default function ChatWidget() {
   return (
     <div>
-<langflow-chat
-    host_url="langflow url"
-    flow_id="your_flow_id"></langflow-chat>
+      <langflow-chat
+        host_url="http://localhost:7860"
+        flow_id="your_flow_id"
+        api_key="your_api_key"
+      ></langflow-chat>
     </div>
   );
 }
@@ -95,41 +133,41 @@ export default function ChatWidget() {
 
 Use the widget API to customize your widget:
 
-| Prop                  | Type      | Required |
-|-----------------------|-----------|----------|
-| api_key               | string    | Yes      |
-| flow_id               | string    | Yes      |
-| host_url              | string    | Yes      |
-| bot_message_style     | json      | No       |
-| chat_position         | string    | No       |
-| chat_trigger_style    | json      | No       |
-| chat_window_style     | json      | No       |
-| output_type           | string    | No       |
-| input_type            | string    | No       |
-| output_component      | string    | No       |
-| error_message_style   | json      | No       |
-| height                | number    | No       |
-| input_container_style | json      | No       |
-| input_style           | json      | No       |
-| online                | boolean   | No       |
-| start_open            | boolean   | No       |
-| online_message        | string    | No       |
-| placeholder           | string    | No       |
-| placeholder_sending   | string    | No       |
-| send_button_style     | json      | No       |
-| send_icon_style       | json      | No       |
-| tweaks                | json      | No       |
-| user_message_style    | json      | No       |
-| width                 | number    | No       |
-| window_title          | string    | No       |
-| session_id            | string    | No       |
-| additional_headers    | json      | No       |
+| Prop | Type | Required |
+|------|------|----------|
+| api_key | string | Yes |
+| flow_id | string | Yes |
+| host_url | string | Yes |
+| bot_message_style | json | No |
+| chat_position | string | No |
+| chat_trigger_style | json | No |
+| chat_window_style | json | No |
+| output_type | string | No |
+| input_type | string | No |
+| output_component | string | No |
+| error_message_style | json | No |
+| height | number | No |
+| input_container_style | json | No |
+| input_style | json | No |
+| online | boolean | No |
+| start_open | boolean | No |
+| online_message | string | No |
+| placeholder | string | No |
+| placeholder_sending | string | No |
+| send_button_style | json | No |
+| send_icon_style | json | No |
+| tweaks | json | No |
+| user_message_style | json | No |
+| width | number | No |
+| window_title | string | No |
+| session_id | string | No |
+| additional_headers | json | No |
 
 **api_key:**
 - Type: String
 - Required: Yes
 - Description: X-API-Key header to send to Langflow
-- Example: "sk-1234567890abcdef"
+- Example: `"sk-1234567890abcdef"`
 
 **bot_message_style:**
 - Type: JSON
@@ -141,25 +179,25 @@ Use the widget API to customize your widget:
 - Type: String
 - Required: No
 - Description: Specifies the input type for chat messages.
-- Example: "text"
+- Example: `"text"`
 
 **output_type:**
 - Type: String
 - Required: No
 - Description: Specifies the output type for chat messages.
-- Example: "text"
+- Example: `"text"`
 
 **output_component:**
 - Type: String
 - Required: No
 - Description: Specify the output ID for chat messages; this is necessary when multiple outputs are present.
-- Example: "output_1"
+- Example: `"output_1"`
 
 **chat_position:**
 - Type: String
 - Required: No
 - Description: Determines the position of the chat window (top-left, top-center, top-right, center-left, center-right, bottom-right, bottom-center, bottom-left).
-- Example: "bottom-right"
+- Example: `"bottom-right"`
 
 **chat_trigger_style:**
 - Type: JSON
@@ -183,19 +221,19 @@ Use the widget API to customize your widget:
 - Type: String
 - Required: Yes
 - Description: Identifier for the flow associated with the component.
-- Example: "123e4567-e89b-12d3-a456-426614174000"
+- Example: `"123e4567-e89b-12d3-a456-426614174000"`
 
 **height:**
 - Type: Number
 - Required: No
 - Description: Specifies the height of the chat window in pixels.
-- Example: 500
+- Example: `500`
 
 **host_url:**
 - Type: String
 - Required: Yes
 - Description: The URL of the host for communication with the chat component.
-- Example: "https://my-langflow-instance.com"
+- Example: `"https://my-langflow-instance.com"`
 
 **input_container_style:**
 - Type: JSON
@@ -213,31 +251,31 @@ Use the widget API to customize your widget:
 - Type: Boolean
 - Required: No
 - Description: Indicates if the chat component is online or offline.
-- Example: true
+- Example: `true`
 
 **start_open:**
 - Type: Boolean
 - Required: No
 - Description: Indicates if the chat window should be open by default.
-- Example: false
+- Example: `false`
 
 **online_message:**
 - Type: String
 - Required: No
 - Description: Custom message to display when the chat component is online.
-- Example: "Chat is online!"
+- Example: `"Chat is online!"`
 
 **placeholder:**
 - Type: String
 - Required: No
 - Description: Placeholder text for the chat input field.
-- Example: "Type your message..."
+- Example: `"Type your message..."`
 
 **placeholder_sending:**
 - Type: String
 - Required: No
 - Description: Placeholder text to display while a message is being sent.
-- Example: "Sending..."
+- Example: `"Sending..."`
 
 **send_button_style:**
 - Type: JSON
@@ -267,19 +305,19 @@ Use the widget API to customize your widget:
 - Type: Number
 - Required: No
 - Description: Specifies the width of the chat window in pixels.
-- Example: 350
+- Example: `350`
 
 **window_title:**
 - Type: String
 - Required: No
 - Description: Title for the chat window, displayed in the header or title bar.
-- Example: "Support Chat"
+- Example: `"Support Chat"`
 
 **session_id:**
 - Type: String
 - Required: No
 - Description: Custom session id to override the random session id used as default.
-- Example: "user-session-001"
+- Example: `"user-session-001"`
 
 **additional_headers:**
 - Type: JSON
@@ -287,9 +325,41 @@ Use the widget API to customize your widget:
 - Description: Additional headers to be sent to Langflow server
 - Example: `{ "X-Custom-Header": "value" }`
 
+## Troubleshooting
+
+### Common Issues and Solutions
+
+#### Widget doesn't appear on the page
+
+- **Solution**: Make sure the script tag is loaded before the `<langflow-chat>` element is rendered. If using a framework, ensure the script is loaded in your `index.html` or main entry file.
+- **Check**: Open your browser's developer console (F12) and look for any JavaScript errors.
+
+#### "Connection failed" or "API error" messages
+
+- **Solution**: Verify that your `host_url` is correct and accessible from your browser. If running Langflow locally, ensure it's actually running on the specified port.
+- **CORS Issue**: If you're getting CORS errors, you may need to configure your Langflow instance to allow requests from your website's domain.
+
+#### Chat works locally but not in production
+
+- **Solution**: Make sure your production `host_url` points to your production Langflow instance, not `localhost`.
+- **API Key**: Ensure your API key is valid for your production environment.
+
+#### Widget appears but doesn't respond to messages
+
+- **Solution**: Double-check that your `flow_id` is correct. You can verify this in your Langflow dashboard.
+- **Check**: Make sure your flow is properly configured in Langflow and has a chat input/output component.
+
+#### Build fails with "npm: command not found"
+
+- **Solution**: Install Node.js and npm from [nodejs.org](https://nodejs.org/). After installation, restart your terminal and try again.
+
+#### TypeScript errors in React
+
+- **Solution**: Make sure to include the type declaration for the custom element as shown in the React example above, or add `// @ts-ignore` before the `<langflow-chat>` element.
 
 ## Live example:
-Try out or [live example](https://codesandbox.io/s/langflow-embedded-chat-example-dv9zpx) to see how the Langflow Embedded Chat ⛓️ works. 
+
+Try out or [live example](https://codesandbox.io/s/langflow-embedded-chat-example-dv9zpx) to see how the Langflow Embedded Chat ⛓️ works.
 
 1. first create a Flow and save it using [Langflow ⛓️](https://github.com/logspace-ai/langflow).
 2. Get the hosted URL to use in the live example.
@@ -297,4 +367,4 @@ Try out or [live example](https://codesandbox.io/s/langflow-embedded-chat-exampl
 
 ## License
 
-This project is licensed under the [MIT License](https://opensource.org/licenses/MIT) - see the [LICENSE](https://github.com/logspace-ai/langflow-embedded-chat/tree/main/LICENSE) file for details.
+This project is licensed under the [MIT License](https://opensource.org/licenses/MIT) - see the [LICENSE](LICENSE) file for details.
