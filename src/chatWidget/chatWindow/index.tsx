@@ -1,6 +1,6 @@
 import { Send } from "lucide-react";
-import { extractMessageFromOutput, getAnimationOrigin, getChatPosition } from "../utils";
-import React, { useEffect, useRef, useState } from "react";
+import { extractMessageFromOutput, getAnimationOrigin, getChatPosition, parseAdditionalHeaders } from "../utils";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { ChatMessageType } from "../../types/chatWidget";
 import ChatMessage from "./chatMessage";
 import { sendMessage } from "../../controllers";
@@ -69,7 +69,7 @@ export default function ChatWindow({
   width?: number;
   height?: number;
   sessionId: React.MutableRefObject<string>;
-  additional_headers?: { [key: string]: string };
+  additional_headers?: { [key: string]: string } | string;
 
 }) {
   const [value, setValue] = useState<string>("");
@@ -93,12 +93,15 @@ export default function ChatWindow({
 
   const [sendingMessage, setSendingMessage] = useState(false);
 
+  // Ensure additional_headers is always an object
+  const parsedHeaders = useMemo(() => parseAdditionalHeaders(additional_headers), [additional_headers]);
+
   function handleClick() {
     if (value && value.trim() !== "") {
       addMessage({ message: value, isSend: true });
       setSendingMessage(true);
       setValue("");
-      sendMessage(hostUrl, flowId, value, input_type, output_type, sessionId, output_component, tweaks, api_key, additional_headers)
+      sendMessage(hostUrl, flowId, value, input_type, output_type, sessionId, output_component, tweaks, api_key, parsedHeaders)
         .then((res) => {
           if (
             res.data &&

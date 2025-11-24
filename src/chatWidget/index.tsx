@@ -1,7 +1,8 @@
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import ChatTrigger from "./chatTrigger";
 import ChatWindow from "./chatWindow";
 import { ChatMessageType } from "../types/chatWidget";
+import { parseAdditionalHeaders } from "./utils";
 const { v4: uuidv4 } = require('uuid');
 
 export default function ChatWidget({
@@ -60,13 +61,17 @@ export default function ChatWidget({
   host_url: string;
   flow_id: string;
   tweaks?: { [key: string]: any };
-  additional_headers?: { [key: string]: string };
+  additional_headers?: { [key: string]: string } | string;
   session_id?: string;
   start_open?: boolean;
 }) {
   const [open, setOpen] = useState(start_open);
   const [messages, setMessages] = useState<ChatMessageType[]>([]);
   const sessionId = useRef(session_id ?? uuidv4());
+  
+  // Parse additional_headers if it's a string (can happen when passed as HTML attribute)
+  const parsedAdditionalHeaders = useMemo(() => parseAdditionalHeaders(additional_headers), [additional_headers]);
+  
   function updateLastMessage(message: ChatMessageType) {
     setMessages((prev) => {
       prev[prev.length - 1] = message;
@@ -2178,7 +2183,7 @@ input::-ms-input-placeholder { /* Microsoft Edge */
         triggerRef={triggerRef}
         position={chat_position}
         sessionId={sessionId}
-        additional_headers={additional_headers}
+        additional_headers={parsedAdditionalHeaders}
       />
     </div>
   );
