@@ -74,3 +74,25 @@ export function extractMessageFromOutput(output:{type:string, message:any}){
 	if(type==="object") return message.text;
 	return "Unknown message structure"
 }
+
+/**
+ * @param additional_headers - Headers as string (JSON), object, or undefined
+ * @returns Parsed headers object or undefined if parsing fails or input is undefined
+ */
+export function parseAdditionalHeaders(
+	additional_headers?: { [key: string]: string } | string
+): { [key: string]: string } | undefined {
+	if (!additional_headers) return undefined;
+	
+	if (typeof additional_headers === 'string') {
+		try {
+			return JSON.parse(additional_headers);
+		} catch (e) {
+			console.error('Failed to parse additional_headers as JSON:', e, 'Value:', additional_headers);
+			return undefined;
+		}
+	}
+	
+	// Already an object
+	return additional_headers;
+}

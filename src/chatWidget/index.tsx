@@ -2,6 +2,7 @@ import { useMemo, useRef, useState } from "react";
 import ChatTrigger from "./chatTrigger";
 import ChatWindow from "./chatWindow";
 import { ChatMessageType } from "../types/chatWidget";
+import { parseAdditionalHeaders } from "./utils";
 const { v4: uuidv4 } = require('uuid');
 
 export default function ChatWidget({
@@ -69,19 +70,7 @@ export default function ChatWidget({
   const sessionId = useRef(session_id ?? uuidv4());
   
   // Parse additional_headers if it's a string (can happen when passed as HTML attribute)
-  const parsedAdditionalHeaders = useMemo((): { [key: string]: string } | undefined => {
-    if (!additional_headers) return undefined;
-    if (typeof additional_headers === 'string') {
-      try {
-        return JSON.parse(additional_headers);
-      } catch (e) {
-        console.error('Failed to parse additional_headers as JSON:', e, 'Value:', additional_headers);
-        return undefined;
-      }
-    }
-    // At this point, additional_headers must be an object (not string, not undefined)
-    return additional_headers as { [key: string]: string };
-  }, [additional_headers]);
+  const parsedAdditionalHeaders = useMemo(() => parseAdditionalHeaders(additional_headers), [additional_headers]);
   
   function updateLastMessage(message: ChatMessageType) {
     setMessages((prev) => {

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { parseAdditionalHeaders } from "../chatWidget/utils";
 
 export async function sendMessage(baseUrl: string, flowId: string, message: string,input_type:string,output_type:string,sessionId:React.MutableRefObject<string>,output_component?:string, tweaks?: Object,api_key?:string,additional_headers?:{[key:string]:string} | string) {
     let data:any;
@@ -15,22 +16,13 @@ export async function sendMessage(baseUrl: string, flowId: string, message: stri
     }
     if (additional_headers){
         // Parse additional_headers if it's a string (can happen when passed as HTML attribute)
-        let parsedHeaders: {[key:string]:string} = {};
-        if (typeof additional_headers === 'string') {
-            try {
-                parsedHeaders = JSON.parse(additional_headers);
-            } catch (e) {
-                console.error('Failed to parse additional_headers as JSON:', e, 'Value:', additional_headers);
-                // Continue without additional headers if parsing fails
-                parsedHeaders = {};
-            }
-        } else {
-            parsedHeaders = additional_headers;
+        const parsedHeaders = parseAdditionalHeaders(additional_headers);
+        if (parsedHeaders) {
+            // Merge headers, ensuring all values are strings
+            Object.keys(parsedHeaders).forEach(key => {
+                headers[key] = String(parsedHeaders[key]);
+            });
         }
-        // Merge headers, ensuring all values are strings
-        Object.keys(parsedHeaders).forEach(key => {
-            headers[key] = String(parsedHeaders[key]);
-        });
     }
     if(sessionId.current && sessionId.current!=""){
         data.session_id=sessionId.current;

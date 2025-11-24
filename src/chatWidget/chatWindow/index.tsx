@@ -1,5 +1,5 @@
 import { Send } from "lucide-react";
-import { extractMessageFromOutput, getAnimationOrigin, getChatPosition } from "../utils";
+import { extractMessageFromOutput, getAnimationOrigin, getChatPosition, parseAdditionalHeaders } from "../utils";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { ChatMessageType } from "../../types/chatWidget";
 import ChatMessage from "./chatMessage";
@@ -94,18 +94,7 @@ export default function ChatWindow({
   const [sendingMessage, setSendingMessage] = useState(false);
 
   // Ensure additional_headers is always an object
-  const parsedHeaders = React.useMemo(() => {
-    if (!additional_headers) return undefined;
-    if (typeof additional_headers === 'string') {
-      try {
-        return JSON.parse(additional_headers);
-      } catch (e) {
-        console.error('Failed to parse additional_headers in ChatWindow:', e);
-        return undefined;
-      }
-    }
-    return additional_headers;
-  }, [additional_headers]);
+  const parsedHeaders = useMemo(() => parseAdditionalHeaders(additional_headers), [additional_headers]);
 
   function handleClick() {
     if (value && value.trim() !== "") {
