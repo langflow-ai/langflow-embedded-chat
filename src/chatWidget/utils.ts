@@ -77,7 +77,7 @@ export function extractMessageFromOutput(output:{type:string, message:any}){
 
 /**
  * @param additional_headers - Headers as string (JSON), object, or undefined
- * @returns Parsed headers object or undefined if parsing fails or input is undefined
+ * @returns Parsed headers object, empty object {} if parsing fails, or undefined if input is undefined
  */
 export function parseAdditionalHeaders(
 	additional_headers?: { [key: string]: string } | string
@@ -85,11 +85,15 @@ export function parseAdditionalHeaders(
 	if (!additional_headers) return undefined;
 	
 	if (typeof additional_headers === 'string') {
+		// Treat empty or whitespace-only strings as invalid
+		if (additional_headers.trim() === '') {
+			return {};
+		}
 		try {
 			return JSON.parse(additional_headers);
 		} catch (e) {
 			console.error('Failed to parse additional_headers as JSON:', e, 'Value:', additional_headers);
-			return undefined;
+			return {};
 		}
 	}
 	
