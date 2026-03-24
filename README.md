@@ -124,6 +124,10 @@ Use the widget API to customize your widget:
 | window_title          | string    | No       |
 | session_id            | string    | No       |
 | additional_headers    | json      | No       |
+| file_upload           | boolean   | No       |
+| file_component        | string    | No       |
+| voice_input           | boolean   | No       |
+| voice_language        | string    | No       |
 
 **api_key:**
 - Type: String
@@ -286,6 +290,30 @@ Use the widget API to customize your widget:
 - Required: No
 - Description: Additional headers to be sent to Langflow server
 - Example: `{ "X-Custom-Header": "value" }`
+
+**file_upload:**
+- Type: Boolean
+- Required: No
+- Description: Enable the file attachment button in the input area. When enabled, users can attach files to messages which are uploaded to the Langflow server before sending.
+- Example: true
+
+**file_component:**
+- Type: String
+- Required: No (but required when file_upload is true)
+- Description: The ID of the flow component that accepts file inputs. File paths are sent via the tweaks object targeting this component.
+- Example: "File-Input-abc123"
+
+**voice_input:**
+- Type: Boolean
+- Required: No
+- Description: Enable the voice-to-text input button. Uses the browser's Web Speech API (SpeechRecognition) to convert speech to text. The button is automatically hidden in browsers that don't support the API.
+- Example: true
+
+**voice_language:**
+- Type: String
+- Required: No
+- Description: BCP 47 language code for speech recognition. If not set, uses the browser's default language.
+- Example: "en-US"
 
 
 ## Live example:

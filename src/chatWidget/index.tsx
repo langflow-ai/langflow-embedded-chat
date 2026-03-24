@@ -33,6 +33,10 @@ export default function ChatWidget({
   input_container_style,
   additional_headers,
   session_id,
+  file_upload,
+  voice_input,
+  file_component,
+  voice_language,
   start_open=false,
 }: {
   api_key?: string;
@@ -63,6 +67,10 @@ export default function ChatWidget({
   tweaks?: { [key: string]: any };
   additional_headers?: { [key: string]: string } | string;
   session_id?: string;
+  file_upload?: boolean;
+  voice_input?: boolean;
+  file_component?: string;
+  voice_language?: string;
   start_open?: boolean;
 }) {
   const [open, setOpen] = useState(start_open);
@@ -751,13 +759,19 @@ video {
 
 .cl-input_container {
   display: flex;
+  flex-direction: column;
   width: 100%;
-  align-items: center;
   border-top-width: 1px;
   --tw-border-opacity: 1;
   border-color: rgb(229 231 235 / var(--tw-border-opacity));
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.cl-input-row {
+  display: flex;
+  width: 100%;
+  align-items: center;
 }
 
 .cl-chat-message {
@@ -922,6 +936,118 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
 
 input::-ms-input-placeholder { /* Microsoft Edge */
   color: rgb(156 163 175);
+}
+
+.cl-file-input-hidden {
+  display: none;
+}
+
+.cl-action-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  margin-left: 0.5rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  border-radius: 0.375rem;
+}
+
+.cl-action-button:hover:not(:disabled) {
+  background-color: rgb(243 244 246);
+}
+
+.cl-action-button:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+.cl-action-icon {
+  height: 1.25rem;
+  width: 1.25rem;
+  color: rgb(107 114 128);
+}
+
+@-webkit-keyframes cl-pulse {
+  0%, 100% { -webkit-transform: scale(1); transform: scale(1); opacity: 1; }
+  50% { -webkit-transform: scale(1.1); transform: scale(1.1); opacity: 0.8; }
+}
+
+@keyframes cl-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+}
+
+.cl-voice-active {
+  background-color: rgb(254 226 226);
+  -webkit-animation: cl-pulse 1.5s ease-in-out infinite;
+          animation: cl-pulse 1.5s ease-in-out infinite;
+}
+
+.cl-voice-active .cl-action-icon {
+  color: rgb(239 68 68);
+}
+
+.cl-file-previews {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  overflow-x: auto;
+  border-bottom: 1px solid rgb(229 231 235);
+}
+
+.cl-file-preview-item {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.5rem;
+  background-color: rgb(243 244 246);
+  border-radius: 0.375rem;
+  flex-shrink: 0;
+  max-width: 180px;
+}
+
+.cl-file-thumbnail {
+  width: 2rem;
+  height: 2rem;
+  object-fit: cover;
+  border-radius: 0.25rem;
+  flex-shrink: 0;
+}
+
+.cl-file-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: rgb(107 114 128);
+  flex-shrink: 0;
+}
+
+.cl-file-name {
+  font-size: 0.75rem;
+  color: rgb(55 65 81);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100px;
+}
+
+.cl-file-remove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.125rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  border-radius: 9999px;
+  color: rgb(107 114 128);
+  flex-shrink: 0;
+}
+
+.cl-file-remove:hover {
+  background-color: rgb(229 231 235);
+  color: rgb(55 65 81);
 }
     `;
 
@@ -2184,6 +2310,10 @@ input::-ms-input-placeholder { /* Microsoft Edge */
         position={chat_position}
         sessionId={sessionId}
         additional_headers={parsedAdditionalHeaders}
+        file_upload={file_upload}
+        voice_input={voice_input}
+        file_component={file_component}
+        voice_language={voice_language}
       />
     </div>
   );

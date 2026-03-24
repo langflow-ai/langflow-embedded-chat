@@ -11,3 +11,8 @@ export type ChatMessageType = {
   export type ChatMessagePlaceholderType = {
     bot_message_style?: React.CSSProperties;
   };
+
+  export type FileAttachment = {
+    file: File;
+    preview?: string;
+  };
