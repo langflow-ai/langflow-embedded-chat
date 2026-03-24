@@ -4,6 +4,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { ChatMessageType } from "../../types/chatWidget";
 import ChatMessage from "./chatMessage";
 import { sendMessage } from "../../controllers";
+import { sendMessageStreaming } from "../../controllers/streamMessage";
 import ChatMessagePlaceholder from "../../chatPlaceholder";
 
 export default function ChatWindow({
@@ -37,7 +38,8 @@ export default function ChatWindow({
   height = 650,
   tweaks,
   sessionId,
-  additional_headers
+  additional_headers,
+  stream
 }: {
   api_key?: string;
   output_type: string,
@@ -70,6 +72,7 @@ export default function ChatWindow({
   height?: number;
   sessionId: React.MutableRefObject<string>;
   additional_headers?: { [key: string]: string } | string;
+  stream?: boolean;
 
 }) {
   const [value, setValue] = useState<string>("");
@@ -92,87 +95,148 @@ export default function ChatWindow({
   /* Initial listener for loss of focus that refocuses User input after a small delay */
 
   const [sendingMessage, setSendingMessage] = useState(false);
+  const [isStreaming, setIsStreaming] = useState(false);
+  const abortRef = useRef<AbortController | null>(null);
+
+  useEffect(() => {
+    return () => { abortRef.current?.abort(); };
+  }, []);
 
   // Ensure additional_headers is always an object
   const parsedHeaders = useMemo(() => parseAdditionalHeaders(additional_headers), [additional_headers]);
 
   function handleClick() {
     if (value && value.trim() !== "") {
-      addMessage({ message: value, isSend: true });
+      const currentValue = value;
+      addMessage({ message: currentValue, isSend: true });
       setSendingMessage(true);
       setValue("");
-      sendMessage(hostUrl, flowId, value, input_type, output_type, sessionId, output_component, tweaks, api_key, parsedHeaders)
-        .then((res) => {
-          if (
-            res.data &&
-            res.data.outputs &&
-            Object.keys(res.data.outputs).length > 0 &&
-            res.data.outputs[0].outputs && res.data.outputs[0].outputs.length > 0
-          ) {
-            const flowOutputs: Array<any> = res.data.outputs[0].outputs;
-            if (output_component &&
-              flowOutputs.map(e => e.component_id).includes(output_component)) {
-              Object.values(flowOutputs.find(e => e.component_id === output_component).outputs).forEach((output: any) => {
-                addMessage({
-                  message: extractMessageFromOutput(output),
-                  isSend: false,
-                });
-              })
-            } else if (
-              flowOutputs.length === 1
+
+      if (stream) {
+        // Streaming path
+        abortRef.current?.abort();
+        const controller = new AbortController();
+        abortRef.current = controller;
+
+        addMessage({ message: "", isSend: false });
+        setIsStreaming(true);
+        const accumulated = { current: "" };
+        let rafId: number | null = null;
+
+        const updateMessage = () => {
+          updateLastMessage({ message: accumulated.current, isSend: false });
+          rafId = null;
+        };
+
+        sendMessageStreaming(
+          hostUrl, flowId, currentValue, input_type, output_type,
+          sessionId.current,
+          {
+            onToken: (chunk) => {
+              accumulated.current += chunk;
+              if (!rafId) rafId = requestAnimationFrame(updateMessage);
+            },
+            onEnd: (data) => {
+              if (rafId) cancelAnimationFrame(rafId);
+              // Final update with accumulated text
+              if (accumulated.current) {
+                updateLastMessage({ message: accumulated.current, isSend: false });
+              }
+              // Capture session_id from end event result
+              if (data && data.session_id) {
+                sessionId.current = data.session_id;
+              }
+              setIsStreaming(false);
+              setSendingMessage(false);
+            },
+            onError: (error) => {
+              if (rafId) cancelAnimationFrame(rafId);
+              updateLastMessage({
+                message: accumulated.current || error,
+                isSend: false,
+                error: true,
+              });
+              setIsStreaming(false);
+              setSendingMessage(false);
+            },
+          },
+          output_component, tweaks, api_key, parsedHeaders as { [key: string]: string } | undefined,
+          controller.signal,
+        );
+      } else {
+        // Non-streaming path (existing behavior)
+        sendMessage(hostUrl, flowId, currentValue, input_type, output_type, sessionId, output_component, tweaks, api_key, parsedHeaders)
+          .then((res) => {
+            if (
+              res.data &&
+              res.data.outputs &&
+              Object.keys(res.data.outputs).length > 0 &&
+              res.data.outputs[0].outputs && res.data.outputs[0].outputs.length > 0
             ) {
-              Object.values(flowOutputs[0].outputs).forEach((output: any) => {
-                addMessage({
-                  message: extractMessageFromOutput(output),
-                  isSend: false,
-                });
-              })
-            } else {
-              flowOutputs
-                .sort((a, b) => {
-                  // Get the earliest timestamp from each flowOutput's outputs
-                  const aTimestamp = Math.min(...Object.values(a.outputs).map((output: any) => Date.parse(output.message?.timestamp)));
-                  const bTimestamp = Math.min(...Object.values(b.outputs).map((output: any) => Date.parse(output.message?.timestamp)));
-                  return aTimestamp - bTimestamp; // Sort descending (newest first)
+              const flowOutputs: Array<any> = res.data.outputs[0].outputs;
+              if (output_component &&
+                flowOutputs.map(e => e.component_id).includes(output_component)) {
+                Object.values(flowOutputs.find(e => e.component_id === output_component).outputs).forEach((output: any) => {
+                  addMessage({
+                    message: extractMessageFromOutput(output),
+                    isSend: false,
+                  });
                 })
-                .forEach((flowOutput) => {
-                  Object.values(flowOutput.outputs).forEach((output: any) => {
-                    addMessage({
-                      message: extractMessageFromOutput(output),
-                      isSend: false,
+              } else if (
+                flowOutputs.length === 1
+              ) {
+                Object.values(flowOutputs[0].outputs).forEach((output: any) => {
+                  addMessage({
+                    message: extractMessageFromOutput(output),
+                    isSend: false,
+                  });
+                })
+              } else {
+                flowOutputs
+                  .sort((a, b) => {
+                    const aTimestamp = Math.min(...Object.values(a.outputs).map((output: any) => Date.parse(output.message?.timestamp)));
+                    const bTimestamp = Math.min(...Object.values(b.outputs).map((output: any) => Date.parse(output.message?.timestamp)));
+                    return aTimestamp - bTimestamp;
+                  })
+                  .forEach((flowOutput) => {
+                    Object.values(flowOutput.outputs).forEach((output: any) => {
+                      addMessage({
+                        message: extractMessageFromOutput(output),
+                        isSend: false,
+                      });
                     });
                   });
-                });
+              }
             }
-          }
-          if (res.data && res.data.session_id) {
-            sessionId.current = res.data.session_id;
-          }
-          setSendingMessage(false);
-        })
-        .catch((err) => {
-          const response = err.response;
-          if (err.code === "ERR_NETWORK") {
-            updateLastMessage({
-              message: "Network error",
-              isSend: false,
-              error: true,
-            });
-          } else if (
-            response &&
-            response.status === 500 &&
-            response.data &&
-            response.data.detail
-          ) {
-            updateLastMessage({
-              message: response.data.detail,
-              isSend: false,
-              error: true,
-            });
-          }
-          console.error(err);
-          setSendingMessage(false);
-        });
+            if (res.data && res.data.session_id) {
+              sessionId.current = res.data.session_id;
+            }
+            setSendingMessage(false);
+          })
+          .catch((err) => {
+            const response = err.response;
+            if (err.code === "ERR_NETWORK") {
+              updateLastMessage({
+                message: "Network error",
+                isSend: false,
+                error: true,
+              });
+            } else if (
+              response &&
+              response.status === 500 &&
+              response.data &&
+              response.data.detail
+            ) {
+              updateLastMessage({
+                message: response.data.detail,
+                isSend: false,
+                error: true,
+              });
+            }
+            console.error(err);
+            setSendingMessage(false);
+          });
+      }
     }
   }
 
@@ -232,7 +296,7 @@ export default function ChatWindow({
               error={message.error}
             />
           ))}
-          {sendingMessage && (
+          {sendingMessage && !isStreaming && (
             <ChatMessagePlaceholder bot_message_style={bot_message_style} />
           )}
           <div ref={lastMessage}></div>

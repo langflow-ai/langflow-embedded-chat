@@ -33,6 +33,7 @@ export default function ChatWidget({
   input_container_style,
   additional_headers,
   session_id,
+  stream,
   start_open=false,
 }: {
   api_key?: string;
@@ -63,6 +64,7 @@ export default function ChatWidget({
   tweaks?: { [key: string]: any };
   additional_headers?: { [key: string]: string } | string;
   session_id?: string;
+  stream?: boolean;
   start_open?: boolean;
 }) {
   const [open, setOpen] = useState(start_open);
@@ -2184,6 +2186,7 @@ input::-ms-input-placeholder { /* Microsoft Edge */
         position={chat_position}
         sessionId={sessionId}
         additional_headers={parsedAdditionalHeaders}
+        stream={stream}
       />
     </div>
   );
